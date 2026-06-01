@@ -1,0 +1,953 @@
+#!YAML
+staticMenus:
+  menus:
+    - id: "support"
+      type: staticMenu
+      title: support_menu_title
+      buttonTitle: support_menu_button_title
+      startingPoint: root
+    - id: "guide"
+      type: staticMenu
+      title: guide_main_menu_title
+      buttonTitle: guide_main_menu_button_title
+      startingPoint: root
+      chunkSize: 2
+      children:
+        - id: "guide_mobile"
+          type: staticMenu
+          title: guide_mobile_menu_title
+          buttonTitle: guide_mobile_menu_button_title
+          children:
+            - id: "guide_ios"
+              type: staticMenu
+              title: guide_ios_title
+              buttonTitle: guide_ios_button_tile
+              chunkSize: 1
+              # children: 
+              #   - id: guide_ios_install
+              #     type: url
+              #     buttonTitle: guide_ios_install_button_title
+              #     url: https://apps.apple.com/us/app/npv-tunnel/id1629465476
+            - id: "guide_android"
+              type: staticMenu
+              title: guide_android_title
+              chunkSize: 1
+              buttonTitle: guide_android_button_title
+              children:
+              - id: "guide_android_npv"
+                type: staticMenu
+                title: guide_android_title_npv
+                buttonTitle: guide_android_button_title_npv
+                chunkSize: 1
+                # file: 
+                #   type: video
+                #   #url: http://sky.synapse.autos/Npv_Tunnel_V2ray_Psiphon_SSH_62.0.0.apk
+                #   # url: https://sky.synapse.autos/3a5b7d9e-5f0e-48ee-b9d8-d551c7da71d8
+                #   url: https://sky.synapse.autos/kargaddan_android_guide.mp4
+                #   caption: guide_android_video_caption
+              # file: 
+              #   type: other
+              #   url: "https://sky.synapse.autos/npvtunnel62.apk"
+              #   # url: https://sky.synapse.autos/3a5b7d9e-5f0e-48ee-b9d8-d551c7da71d8
+              #   caption: guide_android_install_apk_file_caption
+              # children: 
+                # - id: guide_android_install
+                #   type: staticMenu
+                #   buttonTitle: guide_android_install_button_title
+
+        - id: "guide_desktop"
+          type: staticMenu
+          title: guide_desktop_menu_title
+          buttonTitle: guide_desktop_menu_button_title
+          chunkSize: 1
+          children:
+            - id: "guide_mac"
+              type: staticMenu
+              buttonTitle: guide_mac_button_title
+              title: guide_mac_title
+              chunkSize: 1
+              children:
+                - id: "guide_mac_rocket"
+                  type: navigate
+                  navigateTo: guide_ios
+                  buttonTitle: guide_mac_button_silicon
+                - id: "coretnl"
+                  type: staticMenu
+                  buttonTitle: guide_mac_button_intel
+                  title: guide_mac_title_core_tunnel
+                  chunkSize: 1
+                  children:
+                    - id: coretnl_vid
+                      type: staticMenu
+                      title: guide_mac_video_title
+                      buttonTitle: guide_mac_video_button_title
+                      file: 
+                        type: video
+                        url: https://sky.synapse.autos/core_tunnel_guide_mac4.mp4
+                        caption: guide_mac_video_caption
+                    - id: guide_mac_disable
+                      type: staticMenu
+                      title: guide_mac_disable_title
+                      buttonTitle: guide_mac_disable_button_title
+            - id: "guide_windows"
+              type: url
+              buttonTitle: guide_windows_button_tile
+              url: https://telegra.ph/%D8%A7%D8%AA%D8%B5%D8%A7%D9%84-SSH-%D9%88%DB%8C%D9%86%D8%AF%D9%88%D8%B2-%D8%A8%D8%A7-Netmod-09-10
+    - id: "ts"
+      enabled: true
+      type: staticMenu
+      title: ts_menu_title
+      buttonTitle: ts_menu_button_title
+      startingPoint: root
+      children:
+        - id: "tsbw"
+          type: staticMenu
+          title: tsbw_title
+          enabled: false
+          buttonTitle: ""
+        - id: "tsm"
+          type: staticMenu
+          title: ts_mobile_menu_title
+          buttonTitle: ts_mobile_menu_button_title
+          children:
+            - id: "tsi"
+              type: staticMenu
+              title: ts_ios_title
+              buttonTitle: ts_ios_button_tile
+              chunkSize: 1
+              children: 
+                - id: "k6h8"
+                  type: staticMenu
+                  title: ts_ios_cannot_connect_title
+                  buttonTitle: ts_ios_cannot_connect_button_title
+                  chunkSize: 1
+                  children:
+                    - id: "a8h2"
+                      type: staticMenu
+                      title: ts_ios_cannot_connect_not_connected_so_far_title
+                      buttonTitle: ts_ios_cannot_connect_not_connected_so_far_button_title
+                      chunkSize: 1
+                      children:
+                        - id: "b2e1"
+                          type: navigate
+                          navigateTo: tsbw
+                          buttonTitle: ts_ios_cannot_connect_has_connected_navigate_troubleshoot_internet_button_title
+                    - id: "m5k9"
+                      type: staticMenu
+                      title: ts_ios_cannot_connect_has_connected_title
+                      buttonTitle: ts_ios_cannot_connect_has_connected_button_title
+                      chunkSize: 1
+                      children:
+                        - id: "u0h8"
+                          type: navigate
+                          navigateTo: tsbw
+                          buttonTitle: ts_ios_cannot_connect_has_connected_navigate_troubleshoot_internet_button_title
+                - id: "x7s8"
+                  type: staticMenu
+                  title: ts_ios_slow_conn_title
+                  buttonTitle: ts_ios_slow_conn_button_title
+                  chunkSize: 1
+                  children:
+                    - id: d8n8
+                      type: url
+                      buttonTitle: ts_ios_slow_conn_update_npvtunnel_button_title
+                      url: https://apps.apple.com/us/app/npv-tunnel/id1629465476
+                    - id: "z5c5"
+                      type: navigate
+                      navigateTo: tsbw
+                      buttonTitle: ts_ios_cannot_connect_has_connected_navigate_troubleshoot_internet_button_title
+                - id: "s8x7"
+                  type: staticMenu
+                  title: ts_ios_disconnects
+                  buttonTitle: ts_ios_disconnects_button_title
+            - id: "ts_android"
+              type: staticMenu
+              title: ts_android_title
+              buttonTitle: ts_android_button_tile
+              chunkSize: 1
+              children: 
+                - id: "k1h8"
+                  type: staticMenu
+                  title: ts_android_cannot_connect_title
+                  buttonTitle: ts_android_cannot_connect_button_title
+                  chunkSize: 1
+                  children:
+                    - id: "a8h2"
+                      type: staticMenu
+                      title: ts_ios_cannot_connect_not_connected_so_far_title
+                      buttonTitle: ts_ios_cannot_connect_not_connected_so_far_button_title
+                      chunkSize: 1
+                      children:
+                        - id: "b2e1"
+                          type: navigate
+                          navigateTo: tsbw
+                          buttonTitle: ts_ios_cannot_connect_has_connected_navigate_troubleshoot_internet_button_title
+                    - id: "m5k9"
+                      type: staticMenu
+                      title: ts_ios_cannot_connect_has_connected_title
+                      buttonTitle: ts_ios_cannot_connect_has_connected_button_title
+                      chunkSize: 1
+                      children:
+                        - id: "u0h8"
+                          type: navigate
+                          navigateTo: tsbw
+                          buttonTitle: ts_ios_cannot_connect_has_connected_navigate_troubleshoot_internet_button_title
+                - id: "xs87"
+                  type: staticMenu
+                  title: ts_android_slow_conn_title
+                  buttonTitle: ts_android_slow_conn_button_title
+                  chunkSize: 1
+                  children:
+                    - id: 5fg1
+                      type: url
+                      buttonTitle: ts_android_conn_update_npvtunnel_button_title
+                      url: https://sky.synapse.autos/Npv_Tunnel_V2ray_Psiphon_SSH_62_0_0.apk
+                    - id: "z5c5"
+                      type: navigate
+                      navigateTo: tsbw
+                      buttonTitle: ts_ios_cannot_connect_has_connected_navigate_troubleshoot_internet_button_title
+        - id: "ts_desktop"
+          type: staticMenu
+          title: ts_desktop_menu_title
+          buttonTitle: ts_desktop_menu_button_title
+          chunkSize: 1
+          children:
+            - id: xs46
+              type: staticMenu
+              title: ts_desktop_slow_conn_title
+              buttonTitle: ts_dekstop_slow_conn_button_title
+              chunkSize: 1
+              children:
+                - id: "z4c5"
+                  type: navigate
+                  navigateTo: tsbw
+                  buttonTitle: ts_ios_cannot_connect_has_connected_navigate_troubleshoot_internet_button_title
+            - id: xs35
+              type: staticMenu
+              title: ts_desktop_other_title
+              buttonTitle: ts_desktop_other_button_title
+              chunkSize: 1
+              children:
+                - id: xs31
+                  type: url
+                  buttonTitle: desktop_install_anydesk_button_title
+                  url: https://anydesk.com/en/downloads
+      
+    - id: locations
+      type: staticMenu
+      title: locations_title
+      buttonTitle: locations_button_title
+      startingPoint: root
+      chunkSize: 1
+      children:
+        - id: locations_youtube_no_ad
+          type: staticMenu
+          title: locations_youtube_no_ad_title
+          buttonTitle: locations_youtube_no_ad_button_title
+#
+#
+#
+#
+strings:
+  main_menu_command_title: "🏠 منوی اصلی"
+  test: "[[incident_expirationReminder06HoursTrial?nickname=chetori]]"
+  current_menu_not_defined_error: این منو در دسترس نیست. از منوی اصلی دوباره انتخاب کنید.
+  brand_name: مون‌شات
+  account_picker_title: لطفا یک اکانت رو انتخاب کن
+  account_picker_title_no_accounts: |
+    در حال حاضر اکانتی توی لیستت نیست، اگه از قبل اکانتی داری، می‌تونی از بخش اکانت‌های من اون رو به لیستت اضافه کنی و تمدیدش کنی. 
+  account_picker_button_title: 🕒 تمدید اکانت
+  new_account_button_title: 🚀 اکانت جدید
+  prolong_account: "تمدید اکانت <code>{{username}}</code>{{nickname}}"
+  prolong_account_nickname_template: " - <i>{{value}}</i>"
+  choose_days_title: |
+    {{extend-account}}
+    📅 پلن‌ها در حال حاضر نامحدود هستن.
+    
+    بگو می‌خوای اکانتی که خریداری کنی چند روزه باشه؟    
+  choose_device_limit: |
+    {{extend-account}}
+    
+    [[plan_duration]]    
+    👈🏼 لطفا تعداد کاربر همزمان رو انتخاب کن
+    
+    ❕ توجه داشته باشید که چون سرویس‌ها محدودیت ترافیک ندارن، بخاطر مراقبت از شبکه تعداد دستگاه‌های همزمان محدودیت داره.
+    ❓ اگه مثلا پلن تک کاربره تهیه کنید و با دو دستگاه همزمان بهش وصل بشید، دستگاه‌ها برای اتصال با هم رقابت می‌کنن و باعث می‌شه قطع و وصل بشید.
+  plan_duration: "مدت: <b>{{duration}}</b>"
+  plan_button_text: "{{limit}} کاربر {{price}} تومان"
+  card_payment_info: |
+    {{extend-account}}
+    [[plan]]
+    [[plan_price]]
+    [[card-details]]
+    [[card_payment_info_text]]
+  card_payment_info_text: |
+    لطفا مبلغ را به کارت اعلام‌شده واریز کنید و تصویر فیش را همین‌جا ارسال کنید.
+    🌙 [[brand_name]]
+  plan: "پلن: <b>{{plan-caption}}</b>"
+  plan_price: "مبلغ: <b>{{plan-price}}</b> تومان"
+  card-details: |
+    💳 واریز به کارت اعلام‌شده در کانال رسمی:
+    <a href="https://t.me/moonshotgold"><b>[[brand_name]] — اطلاعات پرداخت</b></a>
+  
+  back_to_main_menu_button_title: بازگشت به منوی اصلی ↩️
+  purchase_button_title: 🛍️ خرید / تمدید
+  purchase_menu_title: |
+    از این منو می‌تونی اکانت جدید خریداری کنی یا مدت یکی از اکانت‌های خودت را افزایش بدی.
+
+    📍 با یک اکانت به چند «مسیر» (لوکیشن) وصل می‌شی — از منوی اصلی، <b>مسیرها و لوکیشن‌ها</b> را ببین.
+    🌙 [[brand_name]]
+
+  guide_main_menu_title: |
+    📕 راهنمای نصب — [[brand_name]]
+    
+    سرویس روی گوشی، تبلت، لپتاپ و دسکتاپ قابل استفاده است.
+
+    برای دیدن راهنما، یکی از گزینه‌های زیر را انتخاب کن.
+  guide_main_menu_button_title: 📕 راهنمای نصب 
+  guide_mobile_menu_title: |
+    برای گوشی‌های آیفون گزینه‌ی iOS رو انتخاب کنید.
+    برای گوشی‌های سامسونگ، ال جی، هوآوی، شیائومی و ... گزینه‌ی Android رو انتخاب کنید
+  guide_mobile_menu_button_title: 📱 گوشی / تبلت
+  guide_desktop_menu_title: |
+    🖥️💻 لطفا نوع سیستم خودتون رو انتخاب کنید
+  guide_desktop_menu_button_title: 💻 ویندوز / مک 
+  guide_android_button_title: 📱 اندروید / Android
+  guide_android_button_title_npv: راهنمای برنامه NPV
+  guide_ios_button_tile: 📱 آی او اس / iOS 
+  guide_mac_button_title: 🖥️ مک / Mac
+  guide_windows_button_tile: 💻 ویندوز / Windows
+  back_button_title: ⬅️ بازگشت
+  menu_was_outdated_title: منو آپدیت شد، لطفا دوباره انتخاب کنید
+  error_duplicate_receipt_image_provided: این رسید قبلا پردازش شده است!
+  error: |
+    ⚠️ خطا
+    {{message}}
+  unknown_error: |
+    ⚠️ خطایی رخ داده است. لطفا به پشتیبانی [[support_telegram_id]] پیام بدهید.
+  receipt_added: |
+    ✅ رسید شما در سیستم [[brand_name]] ثبت شد. لطفا منتظر بمانید — نتیجه همین‌جا ارسال می‌شود.
+
+    ⚠️ اگر بیش از یک ساعت گذشت و اطلاعات برایتان ارسال نشد، به [[support_telegram_id]] پیام بدهید.
+  please_wait: ⌛ لطفا کمی منتظر بمانید
+  receipt_not_approved: |
+    ⛔️ متاسفانه رسید شما به علت زیر تایید نشد.
+    {{reason}}
+  DEFAULT_SSH_HOST: star.napscloud.com
+  DEFAULT_SSH_PORT: 7777
+  trial_account_configuration: |
+    [[receipt_approved_new_account]]
+    لطفا به تعداد محدودیت دستگاه توجه کنید
+  SSH_CONFIG: |
+    🌙 <b>[[brand_name]]</b> — کانفیگ اتصال
+
+    <b>Android + iOS + Mac (Apple Silicon) — اندروید، آیفون، آیپد و مک</b>
+
+    کانفیگ RocketTunnel: با کلیک روی لینک زیر، کانفیگ به‌صورت خودکار در برنامه اضافه می‌شود. اگر اپ نصب نیست، با همان لینک نصب کنید؛ بعد دوباره روی لینک بزنید.
+
+    https://rcktnl.site/c/{{_base64_{"host":"[[DEFAULT_SSH_HOST]]","port":[[DEFAULT_SSH_PORT]],"username":"{{username}}","password":"{{password}}","udpPort":7300,"proto":"SSH-Direct","name":"🌙 Moonshot · {{username}}"}_base64_}}
+    
+    مزایای RocketTunnel با [[brand_name]]:
+    🙅‍♂️ بدون تبلیغات
+    🔋 مصرف باتری پایین‌تر نسبت به وی‌پی‌ان‌های اکانتی
+    ✅ بانک و سرویس‌های داخلی — بدون خاموش کردن اتصال
+    _________________
+
+    <b>Windows + NPV + سایر</b>
+
+    Protocol: SSH-Direct
+    Name: <code>Moonshot · {{username}}</code>
+    SSH Host: <code>[[DEFAULT_SSH_HOST]]</code>
+    SSH Port: <code>[[DEFAULT_SSH_PORT]]</code>
+    Udpgw Port: <code>7300</code>
+    UDPGW Transparent DNS: on
+    Username: <code>{{username}}</code>
+    Password: <code>{{password}}</code>
+  receipt_approved_new_account: |
+    _base64_
+    🚀 [[brand_name]] — اکانت جدید شما:
+    پلن: <b>{{plan}}</b>
+    مدت اعتبار از اولین اتصال محاسبه ‌می‌شه.
+
+    ❗️ مقدار هاست حتما بدون http:// وارد شود
+
+    👇🏼 <b>مقادیر با <u>ضربه زدن</u> به راحتی کپی می‌شوند</b>
+    [[SSH_CONFIG]]
+  no_active_plans: ⚠️ در حال حاضر این اکانت فاقد پلن است
+  receipt_approved_extend_account: |
+    🚀 [[brand_name]] — اکانت شما <code>{{username}}</code> با پلن
+    {{plan}}
+    تمدید شد. وضعیت پلن‌های این اکانت:
+    {{plans_description}}
+  new_account_message_guide_button_title: "[[guide_main_menu_button_title]]"
+  my_accounts_button_title: 📱 اکانت‌های من
+  my_accounts_title: |
+    اکانت‌های تست یا اونایی که خریداری کردید اینجا لیست میشن.
+    
+    📣 وقتی اکانتی توی لیست شما باشه، رویداد‌های مربوط به اون اکانت، از طریق همین بات برای شما ارسال می‌شه. 
+
+    اگه از قبل اکانتی خریداری کردید می‌تونید با وارد کردن اطلاعاتش، به این لیست اضافه کنید.
+
+    روی یکی از اکانت‌ها بزنید تا بخش جزئیات اون اکانت براتون نمایش داده بشه.
+
+    <i>مواردی که با [[accounts_expired_account_emoji]] لیست شده‌اند، فاقد پلن فعال هستند.</i>
+  my_accounts_title_no_accounts: |
+    لیست اکانت‌های تو خالیه. اگه اکانتی از قبل داری می‌تونی اینجا اضافه کنی.
+    همینطور با گرفتن تست یا خرید اکانت جدید، اون اکانت به لیستت اضافه می‌شه.
+  my_accounts_add_account_button_title: ➕ اضافه کردن اکانت به لیست
+  my_accounts_account_options_title: |
+    اکانت
+    {{nickname}}
+    یوزرنیم: <code>{{username}}</code>
+    ------
+    {{plans_description}}
+  my_accounts_account_options_title_nickname_template: |
+    نام مستعار: <i>{{value}}</i>
+  my_accounts_account_options_remove_account_from_list_button_title: 🗑️ حذف از لیست
+  my_accounts_account_options_remove_account_from_list_title: |
+    با حذف اکانت، اعتبار اکانت سرجاش می‌مونه و بعدا دوباره می‌تونی بیاریش توی لیستت.
+    اکانت <i>{{nickname}}</i><code>{{username}}</code> حذف بشه؟
+  my_accounts_account_options_remove_account_from_list_confirm_button_title: |
+    🗑️ حذف کن
+  my_accounts_account_set_nickname_button_title: 🖊️ نام مستعار
+  my_accounts_account_title: |
+    {{nickname_template}} {{username}}
+  my_accounts_account_nickname_template: " ({{value}})"
+  support_menu_button_title: |
+    💬 پشتیبانی
+  support_telegram_id: "@moonshotgold"
+  support_menu_title: |
+    💬 پشتیبانی [[brand_name]]
+
+    برای اتصال، تمدید یا پرداخت با آیدی زیر در تماس باشید:
+    [[support_telegram_id]]
+
+    هنگام پیام، این‌ها را بفرستید:
+    • یوزرنیم اکانت (یا اسکرین‌شات کانفیگ)
+    • نوع دستگاه (iOS / Android / ویندوز / مک)
+    • در صورت مشکل سرعت: نتیجه fast.com (بدون فیلترشکن)
+  ts_menu_button_title: 
+    🛠️ رفع مشکل اتصال
+  ts_menu_title: |
+    بیشتر مشکلات با راهنمای نصب یا سنجش اینترنت حل می‌شود.
+
+    ابتدا مشخص کنید مشکل اتصال روی کدام پلتفرم است:
+  ts_mobile_menu_button_title: "[[guide_mobile_menu_button_title]]"
+  ts_desktop_menu_button_title: "[[guide_desktop_menu_button_title]]"
+  ts_ios_button_tile: "[[guide_ios_button_tile]]"
+  ts_android_button_tile: "[[guide_android_button_tile]]"
+  ts_ios_cannot_connect_title: "[[ts_mobile_cannot_connect_title?platform=آی او اس]]"
+  ts_android_cannot_connect_title: "[[ts_mobile_cannot_connect_title?platform=اندروید]]"
+  ts_mobile_menu_title: مدل گوشی که روش مشکل اتصال دارید رو مشخص کنید
+  ts_ios_cannot_connect_button_title: "🙄 کانکت نمیشه"
+  ts_mobile_title: |
+    رفع اشکال دستگاه‌های {{platform}}
+
+    کدوم یک از موارد زیر براتون پیش اومده؟
+  ts_ios_title: "[[ts_mobile_title?platform=iOS]]"
+  ts_android_title: "[[ts_mobile_title?platform=Android]]"
+  ts_android_cannot_connect_button_title: "[[ts_ios_cannot_connect_button_title]]"
+  ts_ios_cannot_connect_not_connected_so_far_button_title: "😒 اصلا کانکت نمیشه"
+  ts_ios_cannot_connect_has_connected_button_title: "🥺 قبلا کانکت می‌شد ولی دیگه نمیشه"
+  ts_ios_cannot_connect_has_connected_title: |
+    اگه تابحال به اکانتتون متصل شدید ولی دیگه وصل نمیشه موارد زیر رو بررسی کنید.
+
+    ۱. مطمئن بشید که اکانتتون اعتبار داره، برای اینکار به بخش اکانت‌های من از منوی اصلی مراجعه کنید و اکانت مورد نظر رو انتخاب کنید. جزئیات اکانت رو می‌تونید ببینید.
+    ۲. اگه اکانت شما اعتبار داره ولی متصل نمیشید، مطمئن بشید که بسته اینترنتی شما فعاله و تموم نشده
+    ۳. اگه هیچکدوم از این موارد مشکلتون رو حل نکرد، <b>سنجش کیفیت اینترنت پایه</b> رو انتخاب کنید
+    ۴. در نهایت، اگه مشکل حل نشد، با آی‌دی 
+
+    [[support_telegram_id]]
+
+    در تماس باشید
+  ts_ios_cannot_connect_has_connected_navigate_troubleshoot_internet_button_title: 📊 سنجش کیفیت اینترنت پایه
+  ts_ios_slow_conn_button_title: 😵‍💫 وصل میشه ولی کُنده
+  ts_ios_slow_conn_title: "[[ts_slow_conn_title?app=اپلیکیشن Npv Tunnel]]"
+  ts_slow_conn_title: |
+    اگه متصل میشید ولی ارتباط شما کُندی داره، موارد زیر رو چک کنید:
+
+    ۱. {{app}} رو آپدیت کنید و مطمئن باشید که آخرین نسخه رو نصب دارید
+    ۳. اگه نسخه اپلیکیشن آپدیت هست ولی با این حال کُندی دارید، مطمئن بشید که ارتباط اینترنت شما سرعت و پهنای باند مناسب داره. گاهی اوقات به دلیل افت سیگنال و یا اختلال مخابراتی، سرعت اتصال شما با اینترنت افت می‌کنه. برای جزئیات بیشتر می‌تونید سنجش کیفیت اینترنت رو انتخاب کنید
+  ts_android_slow_conn_button_title: "[[ts_ios_slow_conn_button_title]]"
+  ts_android_slow_conn_title: "[[ts_ios_slow_conn_title]]"
+  ts_ios_slow_conn_update_npvtunnel_button_title: |
+    🔗 به‌روزرسانی Npv Tunnel
+  ts_android_conn_update_npvtunnel_button_title: دانلود Npv Tunnel v.62
+  ts_ios_cannot_connect_not_connected_so_far_title: |
+    در اغلب موارد دلیل متصل نشدن اکانت شما، اشکال در وارد کردن مقادیر کانفیگ هست.
+
+    موارد زیر رو چک کنید:
+
+    ۱. وارد اپلیکیشن Npv Tunnel بشید و در تب Home وی پی ان رو در حالت خاموش قرار بدید
+    ۲. در تب Configs وارد بخش ویرایش کانفیگ بشید (برای اینکار روی دکمه قلم کاغذ کنار کانفیگ بزنید)
+    ۳. مطمئن بشید که مقدار هاست (SSH Host) فاقد http:// و دقیقا عین مقدار هاست در کانفیگی که دریافت کردید باشه. 
+    ۴. ممکنه هنگام ورود مقدار هاست، سهوا فاصله (Space) تایپ کرده باشید، فاصله‌ها رو حذف کنید
+    ۵. مطمئن بشید که مقدار Username رو صحیح وارد کردید
+    ۶. از صحت فیلدهای دیگه مثل پورت و پسورد اطمینان حاصل کنید
+    ۷. تنظیمات رو ذخیر کنید و کانکت رو بزنید
+
+    اگه مشکل حل نشد، اطمینان حاصل کنید که ارتباط شما با اینترنت برقرار و مناسب است برای اینکار می‌تونید مراحل قسمت <b>سنجش کیفیت اینترنت</b> رو انجام بدید.
+    در نهایت اگه همه‌ی موارد رو انجام دادید و هنوز نمی‌تونید متصل بشید،‌ از کانفیگتون اسکرین‌شات بگیرید و به آی‌دی پشتیبانی:
+
+    [[support_telegram_id]]
+
+    پیام بدید.
+  ts_ios_disconnects_button_title:
+    🤷🏻‍♂️ خود به خود قطع میشه
+  ts_ios_disconnects: |
+    مشکل قطع شدن خود به خود در آی او اس روی Npv Tunnel معمولا به خاطر پُر بودن حافظه دستگاه رخ می‌ده.
+
+    مطمئن باشید که حداقل ۵ گیگابایت فضای خالی روی حافظه دستگاهتون دارید. برای اینکار وارد تنظیمات آي آو اس (Settings) بشید،
+    گزینه General رو انتخاب کنید
+    سپس روی About بزنید.
+    در این قسمت میتونید ظرفیت دستگاه و میزان حافظه‌ی آزاد رو ببینید. مطمئن بشید که مقدار Available حداقل ۵ گیگابایت باشه.
+
+    اگه حافظه دستگاهتون پُره، پیشنهاد می‌کنیم ویدیو، عکس و اپلیکیشن‌های غیر ضروری رو از روی دستگاهتون حذف کنید.
+  ts_mobile_cannot_connect_title: |
+    رفع مشکل عدم اتصال روی {{platform}}.
+
+    کدوم یک از حالت‌های زیر براتون پیش اومده؟ 
+  tsbw_title: |
+    برای سرعت بالا و پایداری خوبِ سرویسِ وی پی ان، باید اتصال شما (بدون وی پی ان) با اینترنت مناسب و خوب باشه.
+    
+    ۱. اگر از طریق دیتا متصل هستید، مطمئن بشید که بسته اینترنت فعال دارید
+    ۲. اگه فیلترشکنی روشن هست، اون رو خاموش کنید و مرورگرتون رو باز کنید
+    ۳. وارد سایت fast.com بشید
+    ۴. کمی صبر کنید تا ارزیابی اولیه کامل بشه
+    ۵. روی دکمه show more info بزنید و مجدد صبر کنید
+    ۶. اگر با پیغام خطا (معمولا نوشته با رنگ قرمز) نمایش داده شد، یعنی اتصال شما به اینترنت با اختلال زیاد همراه هست.
+    ۷. در نهایت عدد اصلی که به شما نشون میده، پهنای باند دریافت شما هست. اگر این مقدار کمتر از ۱۰ مگابیت هست توصیه می‌کنیم که سیگنال اینترنت خودتون رو چک کنید. اگر از اینترنت خانگی استفاده می‌کنید، یکبار مودم یا روتر رو Restart کنید
+    ۸. اگه پهنای باند اتصال شما مناسب هست و مشکلی در اتصال وی پی ان دارید، از همین صفحه اسکرین‌شایت بگیرید و برای آی‌دی پشتیبانی
+
+    [[support_telegram_id]]
+
+    بفرستید تا ما مشکل رو دقیق‌تر بررسی کنیم.
+  ts_desktop_menu_title: "[[ts_mobile_title?platform=Desktop/Laptop]]"
+  ts_dekstop_slow_conn_button_title: "[[ts_ios_slow_conn_button_title]]"
+  ts_desktop_slow_conn_title: "[[ts_slow_conn_title?app=برنامه‌ای با اون متصل ‌می‌شید]]"
+  ts_desktop_other_button_title: موارد دیگر
+  ts_desktop_other_title: |
+    اگه مواردی که در راهنما‌ها اشاره‌ شده رو انجام دادید و هنوز در اتصالتون مشکل دارید، پیشنهاد‌ میکنیم که با پشتیبانی در تماس باشید تا مشکل رو براتون حل کنیم.
+
+    در اغلب اوقات رفع اشکال سیستم‌های لپتاپ و دسکتاپ کمی پیچیده می‌شود؛ پیشنهاد می‌کنیم با ریموت روی سیستم شما مشکل را حل کنیم. 
+    برای اینکار کافیه برنامه‌ی AnyDesk رو از لینک زیر دریافت، نصب و اجرا کنید.
+    سپس کدی که بهتون میده رو برای ما بفرستید تا اسرع فرصت ریموت بزنیم و مشکل رو حل کنیم.
+
+    اگه روی سیستم‌عامل مک هستید حتما همه‌ی دسترسی‌های لازم رو به برنامه AnyDesk بدید که بتونیم به سیستم شما وصل بشیم.
+    آی دی پشتیبانی:
+
+    [[support_telegram_id]]
+  desktop_install_anydesk_button_title: 🔗 لینک دانلود Anydesk
+  get_trial_button_title:
+    🚀 دریافت اکانت تست
+  get_trial_already_used_title: |
+    شما در تاریخ <b>{{date}}</b> اکانت تست دریافت کرده‌اید.
+    اکانت <code>{{username}}</code>
+    <i>{{plan_caption}}</i>
+  get_trial_available_title: |
+    🚀 [[brand_name]] — یک‌بار اکانت تست رایگان
+    مشخصات: <b>{{plan_caption}}</b>
+    ⚠️ توجه داشته‌ باشید که شما می‌توانید حداکثر با {{cap}} دستگاه بصورت همزمان متصل بشید. در صورتی که با تعداد دستگاه‌های بیشتر متصل بشید، دستگاه‌ها برای تصاحب اتصال باهم رقابت می‌کنن و باعث قطع و وصل شدن همدیگه میشن.
+  get_trial_available_create_account_button_title: |
+    دریافت اکانت تست
+  get_trial_unavailable_title: |
+    ما برای محافظت از زیرساخت شبکه، روزانه تعداد محدودی اکانت‌ تست ارائه می‌دیم.
+    با عرض پوزش، سقف تعداد اکانت‌های تست ساخته شده در {{hours}} ساعت اخیر پر شده.
+    برای دریافت اکانت تست لطفا بعدا مراجعه کنین.
+  account_picker_account_title: "[[my_accounts_account_title]]"
+  creating_trial_account: "⌛️ [[brand_name]] — در حال ساخت اکانت تست شما..."
+  root_menu_title: |
+    سلام، به <b>[[brand_name]]</b> خوش آمدی 👋🚀
+
+    اتصال پایدار به اینترنت — بدون سقف ترافیک، با یک اکانت به چند مسیر (لوکیشن).
+
+    ✅ پایداری و کیفیت بالا
+    📡 همه اپراتورها و اینترنت خانگی
+    🙅‍♂️ RocketTunnel: بدون تبلیغ · بانک بدون خاموش کردن VPN
+    🌙 پشتیبانی تا آخر اعتبار — [[support_telegram_id]]
+    📍 یک اکانت، چند سرور — منوی <b>مسیرها و لوکیشن‌ها</b>
+  my_accounts_account_options_get_config_button_title: |
+    🔗 کانفیگ اتصال
+  my_accounts_account_options_get_config_ssh: |
+    _base64_
+    🌙 [[brand_name]] — کانفیگ SSH برای <code><b>{{username}}</b></code>
+    {{nickname}}
+    
+    [[SSH_CONFIG]]
+  my_accounts_account_options_get_config_ssh_nickname: "\nاکانت: <i>{{value}}</i>"
+  my_accounts_account_options_reset_password_button_title: "🔑 تغییر پسورد"
+  my_accounts_account_options_reset_password_title: |
+    اگه تایید کنی، پسورد این اکانت ریست می‌شه و اطلاعات اتصال جدید برات ارسال می‌شه.
+
+    ⚠️ اتصال‌های فعلی بعد از چند دقیقه قطع می‌شن.
+    اکانت <i>{{nickname}}</i><code>{{username}}</code>
+  my_accounts_account_options_reset_password_confirm_button_title: |
+    🔄 رمز رو ریست کن
+  my_accounts_account_options_reset_password_get_config_ssh: |
+    _base64_
+    ✅ پسورد اکانت ریست شد.
+    [[my_accounts_account_options_get_config_ssh]]
+  my_accounts_account_options_reset_password_get_config_ssh_nickname_template: "[[my_accounts_account_options_get_config_ssh_nickname]]"
+  my_accounts_account_options_taffic_stats_button_title: 📊 آمار ترافیک مصرفی
+  my_accounts_account_options_taffic_stats_title: |
+    📊 آمار ترافیک برای اکانت:
+    <i>{{nickname}}</i><code>{{username}}</code>
+
+    ۲۴ ساعت گذشته:
+    {{traffic_1_day}}
+    ---
+    ۷ روز اخیر:
+    {{traffic_7_days}}
+    ---
+    ۳۰ روز اخیر:
+    {{traffic_30_days}}
+    ---
+    کل ترافیک:
+    {{total_traffic_all_time}}
+  my_accounts_account_options_prolong_button_title: |
+    🗓️ تمدید / رزرو
+  my_accounts_account_options_taffic_stats_zero: صفر
+  guide_ios_install_button_title: نصب برنامه از App Store
+  guide_ios_title: |
+    ابتدا اپلیکیشن (RocketTunnel) رو نصب کنید (حتما اپلیکیشن آپدیت باشه) . سپس:
+    
+    <a href="https://apps.apple.com/us/app/rockettunnel/id6478808249">لینک دانلود 🚀 RocketTunnel از اپ استور</a>
+
+    1️⃣ پس از نصب برنامه کافیه روی لینکی که در کانفیگ خریداری کردید ضربه بزنید تا کانفیگتون بصورت خودکار داخل برنامه اضافه بشه
+
+    2️⃣ دکمه کانکت رو بزنید تا متصل بشید
+  guide_android_install_apk_file_caption: فایل نصب اپلیکیشن Npv Tunnel برای Android
+  guide_android_title_npv: |
+    ابتدا اپلیکیشن <code>Npv Tunnel</code> رو از طریق لینک زیر APK و یا از Google Play نصب کنید. سپس:
+
+    <a href="https://sky.synapse.autos/Npv_Tunnel_V2ray_Psiphon_SSH_62_0_0.apk">لینک دانلود اپلیکیشن</a>
+
+    1️⃣ در تب کانفیگ روی دکمه افزودن بزنید، روی Add config manually بزنید و گزینه SSH config رو انتخاب کنید  
+
+    2️⃣ اطلاعات کانفیگ خود را وارد کنید
+
+    3️⃣ پس از افزودن کانفیگ جدید روی اسم آن کلیک کنید تا انتخاب شود (کنارش آبی میشه)
+
+    4️⃣ به تب هوم رفته و روی دکمه کانکت بزنید
+
+  guide_android_title: |
+    ابتدا اپلیکیشن (RocketTunnel) رو نصب کنید (حتما اپلیکیشن آپدیت باشه) . سپس:
+    
+    <a href="https://play.google.com/store/apps/details?id=com.hypertunnel.android&hl=en">لینک دانلود 🚀 RocketTunnel از گوگل‌پلی</a>
+
+    1️⃣ پس از نصب برنامه کافیه روی لینکی که در کانفیگ خریداری کردید ضربه بزنید تا کانفیگتون بصورت خودکار داخل برنامه اضافه بشه
+
+    2️⃣ دکمه کانکت رو بزنید تا متصل بشید
+  guide_mac_button_intel: سری Intel
+  guide_mac_button_silicon: سری Silicon
+  guide_mac_title: |
+    لطفا ابتدا سری دستگاه خودتون رو انتخاب کنید. 
+    
+    اگه سری دستگاهتون رو نمیدونید، روی سیستمتون بالا گوشه سمت چپ روی آيکون اپل بزنید و سپس گزینه 
+    About This Mac
+    رو انتخاب کنید. در صفحه‌ی اگر عبارت Intel ذکر شده یعنی سیستم شما سری اینتل است. اگر مثلا Apple M1 درج شده یعنی سیلیکون است.
+  guide_mac_title_core_tunnel: |
+    نصب و استفاده از VPN روی سیستم‌عامل مک شامل دو بخش می‌شود:
+
+    1️⃣  نصب و تنظیم و اتصال با نرم‌افزار Core Tunnel
+
+    2️⃣ تنظیم کردن پراکسی سیستم عامل
+
+    توجه داشته باشید که برای استفاده از فیلترشکن روی سیستم‌عامل مک، باید هر دو مرحله رو انجام بدید.
+    می‌تونید از فایل ویدیوی راهنما برای تنظیمات مک خودتون استفاده کنید.
+  guide_mac_video_caption: راهنمای نصب و تنظیم SSH روی سیستم عامل مک
+  guide_mac_disable_button_title: 🔌 خاموش کردن SSH روی مک
+  guide_mac_disable_title: |
+    برای غیر فعال کردن فیلترشکن روی مک، ابتدا وارد تنظیمات Wifi یا Lan بشید.
+    سپس وارد قسمت جزئیاتش بشید و در بخش Proxies، گزینه‌ی SOCKS proxy رو در حالت خاموش قرار بدید. 
+
+  guide_mac_video_title: |
+    لطفا پس از دریافت کانفیگ مطابق با ویدیو تنظیمات رو انجام بدید.
+
+    ⚠️ دقت کنید که در زمان وارد کردن پارامتر‌ها Space یا کاراکتر اضافی وارد نشود
+  guide_mac_video_button_title: 🎥 ویدیو راهنما
+  locations_button_title: 📍 مسیرها و لوکیشن‌ها
+  locations_title: |
+    🌙 <b>[[brand_name]]</b> — شبکه مسیرها
+
+    با تغییر Host و Port در تنظیمات، به لوکیشن دیگر وصل می‌شوید. یوزرنیم و پسورد همان اکانت فعلی است.
+
+    🇩🇪 آلمان = پیش‌فرض · پایین‌تر = IP ثابت (ترید / مالی)
+
+    کلاستر اصلی: آلمان 🇩🇪
+    Host: <code>star.napscloud.com</code>
+    port: <code>7777</code>
+    ℹ️ ممکن است برخی سرویس‌ها، لوکیشن‌های دیگری نمایش بدهند
+    ----------
+    آلبانی 🇦🇱
+    Host: <code>orbit.napscloud.com</code>
+    port: <code>5050</code>
+    ----------
+    فرانسه 🇫🇷
+    Host: <code>ocean.napscloud.com</code>
+    Port: <code>3434</code>
+    ----------
+    هلند 🇳🇱
+    Host: <code>earth.napscloud.com</code>
+    Port: <code>4040</code>
+    ----------
+    امریکا 🇺🇸
+    Host: <code>mars.napscloud.com</code>
+    Port: <code>3030</code>
+    ----------
+    ترکیه 🇹🇷
+    Host: <code>sky.napscloud.com</code>
+    Port: <code>3535</code>
+    ----------
+    کانادا 🇨🇦
+    Host: <code>leo.napscloud.com</code>
+    port: <code>3333</code>
+    ----------
+    انگلیس 🇬🇧
+    Host: <code>nova.napscloud.com</code>
+    port: <code>3232</code>
+    ----------
+    لوگزامبورگ 🇱🇺
+    Host: <code>flora.napscloud.com</code>
+    port: <code>3636</code>
+    ----------
+    سنگاپور 🇸🇬
+    Host: <code>atlas.napscloud.com</code>
+    port: <code>3737</code>
+    ----------
+    ایتالیا 🇮🇹
+    Host: <code>opal.napscloud.com</code>
+    port: <code>3939</code>
+    ----------
+    استرالیا 🇦🇺
+    Host: <code>river.napscloud.com</code>
+    port: <code>3838</code>
+    ----------
+    دانمارک 🇩🇰
+    Host: <code>cube.napscloud.com</code>
+    port: <code>4848</code>
+    ----------
+    هند 🇮🇳
+    Host: <code>karma.napscloud.com</code>
+    port: <code>5151</code>
+    ----------
+    ژاپن 🇯🇵 (آی پی ثابت ویژه پلتفورم‌های ترید و امور مالی)
+    Host: <code>titan.napscloud.com</code>
+    Port: <code>4343</code>
+    ----------
+    استونی 🇪🇪 (آی پی ثابت ویژه پلتفورم‌های ترید و امور مالی)
+    Host: <code>galaxy.napscloud.com</code>
+    Port: <code>4242</code>
+    ----------
+    سنگاپور 🇸🇬 (آی پی ثابت ویژه پلتفورم‌های ترید و امور مالی)
+    Host: <code>solar.napscloud.com</code>
+    Port: <code>4444</code>
+    ----------
+    سوئیس 🇨🇭 (آی پی ثابت ویژه پلتفورم‌های ترید و امور مالی)
+    Host: <code>venus.napscloud.com</code>
+    Port: <code>4646</code>
+    ----------
+    امارات 🇦🇪 (آی پی ثابت ویژه پلتفورم‌های ترید و امور مالی)
+    Host: <code>coral.napscloud.com</code>
+    port: <code>4141</code>
+    ----------
+    آلمان 🇩🇪 (آی پی ثابت ویژه پلتفورم‌های ترید و امور مالی)
+    Host: <code>luna.napscloud.com</code>
+    port: <code>3131</code>
+    ----------
+    روسیه 🇷🇺 (آی پی ثابت ویژه پلتفورم‌های ترید و امور مالی)
+    Host: <code>kasper.napscloud.com</code>
+    port: <code>4747</code>
+    ----------
+    اسپانیا 🇪🇸 (آی پی ثابت ویژه پلتفورم‌های ترید و امور مالی)
+    Host: <code>planet.napscloud.com</code>
+    port: <code>4949</code>
+    ----------
+    ارمنستان 🇦🇲 (آی پی ثابت ویژه پلتفورم‌های ترید و امور مالی)
+    Host: <code>orion.napscloud.com</code>
+    port: <code>5252</code>
+
+    هنگام کپی‌ کردن هاست، مراقب باشید فاصله اضافه یا http:// وارد نشه.
+  locations_youtube_no_ad_button_title: 📺 یوتوب بدون تبلیغ (رایگان)
+  locations_youtube_no_ad_title: | 
+    اگر یوتوب زیاد استفاده می‌کنید، با [[brand_name]] می‌توانید بدون هزینه مازاد، یوتوب را بدون تبلیغ تماشا کنید.
+    برای اینکار کافیه در تنظیمات اتصالتون مقدار هاست و پورت رو به صورت زیر تغییر بدید:
+
+    Host: <code>orbit.napscloud.com</code>
+    Port: <code>5050</code>
+
+    ⚠️ توجه کنید که مقدار هاست بدون http و دقیقا بصورت بالا وارد شود
+  #### INCIDENTS
+  inc_new_account: "[[new_account_button_title]]"
+  inc_prolong_account_button_title: تمدید اکانت {{username}}
+  inc_nickname_tmpl: "[[prolong_account_nickname_template]]"
+  incident_tooManyAuth: |
+    🚀 <b>[[brand_name]]</b>
+    ⚡️ همراه گرامی، ظرفیت اکانت <code>{{username}}</code>{{nickname}} حداکثر {{cap}} دستگاه است.
+    ظاهرا با تعداد دستگاه‌های بیشتری متصل می‌شین. توجه داشته باشین که اتصال‌های بیشتر از ظرفیت اکانت شما موجب قطع و وصل شدنشون میشه.
+    در صورت تمایل برای ارتقاء اکانت یا تهیه اکانت‌ اضافی با ما در تماس باشید. 🙏🏻
+  incident_incorrectPassword: |
+    🚀 <b>[[brand_name]]</b>
+    ⛔️ همراه گرامی، پسورد ورود برای اکانت <code>{{username}}</code><i>{{nickname}}</i> اشتباه است.
+    پسورد صحیح شما
+    <code>{{password}}</code>
+    می‌باشد 🙏🏻
+  incident_notActive: |
+    🚀 <b>[[brand_name]]</b>
+    💀 همراه گرامی، اعتبار اکانت <code>{{username}}</code><i>{{nickname}}</i> تمام شده اما هنوز تلاش برای اتصال دارید.
+    برای تمدید این اکانت می‌تونید روی دکمه‌ی زیر بزنید 👇🏼
+  incident_firstConnection: |
+    🚀 <b>[[brand_name]]</b>
+    🥳 اولین اتصال موفق به <code>{{username}}</code><i>{{nickname}}</i> — ممنون که همراه مایی 🙏🏼
+
+    💡 کانفیگ و مسیرها را از «اکانت‌های من» و «مسیرها و لوکیشن‌ها» ببین.
+  incident_suspended: |
+    🚀 <b>[[brand_name]]</b>
+    🕰️ همراه گرامی، اعتبار <code>{{username}}</code><i>{{nickname}}</i> تمام شده و اکانت مسدود است.
+    برای تمدید این اکانت می‌تونید روی دکمه‌ی زیر بزنید 👇🏼
+  incident_expiration_base: |
+    🚀 <b>[[brand_name]]</b>
+    ⏰ همراه گرامی، اعتبار اکانت{{account_type}} <code>{{username}}</code><i>{{nickname}}</i> تا کمتر از <b>{{hours}} ساعت</b> دیگر تمام می‌شود.
+    برای تمدید و افزودن مدت به این اکانت می‌تونید روی دکمه‌ی زیر بزنید 👇🏼
+  incident_expirationReminder06HoursTrial: "[[incident_expiration_base?hours=۶&account_type=<b> تست</b>]]"
+  incident_expirationReminder12HoursTrial: "[[incident_expiration_base?hours=۱۲&account_type=<b> تست</b>]]"
+  incident_expirationReminder24HoursTrial: "[[incident_expiration_base?hours=۲۴&account_type=<b> تست</b>]]"
+  incident_expirationReminder48HoursTrial: "[[incident_expiration_base?hours=۴۸&account_type=<b> تست</b>]]"
+  incident_expirationReminder72HoursTrial: "[[incident_expiration_base?hours=۷۲&account_type=<b> تست</b>]]"
+  incident_expirationReminder06Hours: "[[incident_expiration_base?hours=۶&account_type=]]"
+  incident_expirationReminder12Hours: "[[incident_expiration_base?hours=۱۲&account_type=]]"
+  incident_expirationReminder24Hours: "[[incident_expiration_base?hours=۲۴&account_type=]]"
+  incident_expirationReminder48Hours: "[[incident_expiration_base?hours=۴۸&account_type=]]"
+  incident_expirationReminder72Hours: "[[incident_expiration_base?hours=۷۲&account_type=]]"
+  wallet_root_button_title: 💰 کیف پول
+  wallet_root_title: |
+    🌙 [[brand_name]] — [[wallet_root_button_title]]
+    
+    موجودی شما: <b>{{balance}}</b>
+    
+    با یک‌بار شارژ، چند بار خرید یا تمدید انجام دهید.
+  wallet_topup_button_title: 💵 افزایش موجودی
+  wallet_topup_min_deposit: "۱۰۰ هزار تومان"
+  wallet_topup_title: |
+    مبلغ: دلخواه <b>(حداقل [[wallet_topup_min_deposit]])</b>
+    [[card-details]]
+    [[card_payment_info_text]]
+  wallet_balance_format: "{{balance}} تومان"
+  wallet_balance_zero: صـفر
+  wallet_deposit_approved: |
+    🌙 [[brand_name]] — کیف پول
+    🥳 موجودی شما <b>{{amount}} تومان</b> افزایش یافت
+
+    موجودی فعلی: <b>{{balance}} تومان</b>
+  wallet_manual_entry_created: |
+    🌙 [[brand_name]] — کیف پول
+    🥳 مبلغ <b>{{amount}} تومان</b> از طرف ادمین به کیف پول شما اضافه شد.
+    {{description}}
+
+    موجودی فعلی: <b>{{balance}} تومان</b>
+  wallet_topup_rc_collector_button_title: 💰 افزایش موجودی کیف پول
+  admin_reply_to_text: |
+    پاسخ ادمین:
+    
+    {{text}}
+  choose_payment_method_wallet_title: |
+    💰 پرداخت از کیف پول
+
+    مبلغ: <b>{{price}} تومان</b>
+    موجودی: <b>{{balance}} تومان</b>
+  choose_payment_method_title: لطفا نحوه پرداخت رو انتخاب کنید
+  choose_payment_method_c2c_button_title: 💳 کارت به کارت
+  choose_payment_method_wallet_button_title: 💰 کیف پول
+  choose_payment_method_wallet_confirm_button_title: 👍🏻 پرداخت
+  choose_payment_method_wallet_insufficient_message: 🥺 موجودی کیف پول شما کافی نیست
+  wallet_purchase_successfull_landing: |
+    ✅ پرداخت شما از کیف پول با موفقیت انجام شد
+
+    موجودی کیف پول: <b>{{balance}} تومان</b>
+  wallet_transactions_button_title: 🧾 لیست تراکنش‌ها
+  receipt_collector_title: لطفا مشخص کنید که این فیش رو برای خرید کدوم پلن ارسال کردید.
+  wallet_double_spending_error: خرید شما از طریق کیف پول انجام شده است،‌ لطفا به بخش اکانت‌های من مراجعه کنید
+  menu_is_disabled_at_the_moment: ☹️ این منو در حال حاضر غیر فعال است
+  pagination_indicator: صفحه‌ی {{current}} از {{total}}
+  pagination_first_button: ⏮️ اول
+  pagination_previous_button: ⬅️ قبلی
+  pagination_next_button: ➡️ بعدی
+  pagination_last_button: ⏭️ آخر
+  accounts_expired_account_emoji: ︕
+  
+incidents:
+  types:
+    expirationReminder72Hours:
+      ttl: 259200
+      count: 1
+      buttons:
+        - title: inc_prolong_account_button_title
+          action: grammyMenu
+          target: chs-dys
+      injections:
+        accountId: true
+    expirationReminder24Hours:
+      ttl: 86400
+      count: 1
+      buttons:
+        - title: inc_prolong_account_button_title
+          action: grammyMenu
+          target: chs-dys
+      injections:
+        accountId: true
+    expirationReminder06Hours:
+      ttl: 21600
+      count: 1
+      buttons:
+        - title: inc_prolong_account_button_title
+          action: grammyMenu
+          target: chs-dys
+      injections:
+        accountId: true
+    expirationReminder06HoursTrial:
+      ttl: 21600
+      count: 1
+      buttons:
+        - title: inc_prolong_account_button_title
+          action: grammyMenu
+          target: chs-dys
+      injections:
+        accountId: true
+    suspended:
+      ttl: 60
+      count: 1
+      buttons:
+        - title: inc_prolong_account_button_title
+          action: grammyMenu
+          target: chs-dys
+      injections:
+        accountId: true
+    firstConnection:
+      ttl: 0
+      count: 0
+    notActive:
+      ttl: 3600
+      count: 1
+      buttons:
+        - title: inc_prolong_account_button_title
+          action: grammyMenu
+          target: chs-dys
+      injections:
+        accountId: true
+    incorrectPassword:
+      ttl: 1800
+      count: 1
+    tooManyAuth:
+      ttl: 3600
+      count: 1
+      buttons:
+        - action: staticMenu
+          target: support
+        - title: inc_new_account
+          action: grammyMenu
+          target: chs-dys
+
+newAccountMessage:
+  buttons:
+    - action: staticMenu
+      target: guide
