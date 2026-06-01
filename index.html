@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>moonshot.gold — خرید و فروش طلای میلی‌گرمی</title>
-  <meta name="description" content="پلتفرم حرفه‌ای خرید و فروش طلای میلی‌گرمی — امن، شفاف، آنی" />
+  <title>moonshot.gold — ابزار و آموزش طلا</title>
+  <meta name="description" content="ابزارها، تحلیل و ویدیوهای آموزشی طلا — برای اعضای moonshot.gold" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -350,6 +350,67 @@
     }
     .price-btn-sell:hover { border-color: var(--gold); }
 
+    /* ── Learn preview ── */
+    .learn-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .learn-card {
+      background: var(--navy-mid);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: border-color 0.3s;
+    }
+    .learn-card:hover { border-color: rgba(201, 168, 76, 0.25); }
+    .learn-thumb {
+      aspect-ratio: 16/9;
+      background: linear-gradient(135deg, var(--navy-light), var(--navy-mid));
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .learn-thumb::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(6, 11, 24, 0.55);
+      backdrop-filter: blur(2px);
+    }
+    .learn-lock {
+      position: relative;
+      z-index: 1;
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+      font-size: 1rem;
+      background: rgba(6, 11, 24, 0.6);
+    }
+    .learn-body { padding: 1.25rem 1.5rem 1.5rem; }
+    .learn-tag {
+      font-size: 0.7rem;
+      color: var(--gold-dim);
+      letter-spacing: 0.06em;
+      margin-bottom: 0.4rem;
+    }
+    .learn-card h3 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+    }
+    .learn-card p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      font-weight: 300;
+    }
+
     /* ── Stats bar ── */
     .stats {
       border-top: 1px solid var(--border);
@@ -630,6 +691,7 @@
       .hero-grid { grid-template-columns: 1fr; gap: 3rem; }
       .hero-visual { order: -1; }
       .features-grid { grid-template-columns: 1fr; }
+      .learn-grid { grid-template-columns: 1fr; }
       .steps { grid-template-columns: 1fr 1fr; gap: 2rem; }
       .steps::before { display: none; }
       .stats-grid { grid-template-columns: repeat(2, 1fr); }
@@ -670,10 +732,10 @@
         <img src="assets/logov.png?v=2" alt="moonshot.gold" />
       </a>
       <ul class="nav-links" id="navLinks">
-        <li><a href="#features">امکانات</a></li>
-        <li><a href="#how">نحوه کار</a></li>
-        <li><a href="#trust">امنیت</a></li>
-        <li><a href="#cta" class="nav-cta">شروع کنید</a></li>
+        <li><a href="#features">ابزارها</a></li>
+        <li><a href="#learn">آموزش</a></li>
+        <li><a href="#how">نحوه دسترسی</a></li>
+        <li><a href="#cta" class="nav-cta">ورود / عضویت</a></li>
       </ul>
       <button class="menu-toggle" id="menuToggle" aria-label="منو">☰</button>
     </div>
@@ -683,18 +745,18 @@
   <section class="hero">
     <div class="container hero-grid">
       <div class="hero-content">
-        <div class="hero-badge">پلتفرم معاملات طلای دیجیتال</div>
+        <div class="hero-badge">اکوسیستم دانش و ابزار طلا</div>
         <h1>
-          طلا را به <span class="highlight">میلی‌گرم</span> بخرید.<br />
-          بدون مرز، بدون واسطه.
+          طلا را <span class="highlight">بشناسید</span>.<br />
+          عمیق‌تر از همیشه.
         </h1>
         <p class="hero-desc">
-          moonshot.gold پلتفرمی برای خرید و فروش طلای خالص به واحد میلی‌گرم است.
-          قیمت لحظه‌ای، تسویه آنی، و نگهداری امن — همه در یک جا.
+          moonshot.gold فضایی برای ابزارهای تحلیل، داده‌های بازار و ویدیوهای آموزشی
+          درباره طلا — مخصوص اعضایی که می‌خواهند بیشتر بدانند.
         </p>
         <div class="hero-actions">
-          <a href="#cta" class="btn btn-primary">ایجاد حساب</a>
-          <a href="#how" class="btn btn-ghost">بیشتر بدانید</a>
+          <a href="#cta" class="btn btn-primary">فعال‌سازی حساب</a>
+          <a href="#" class="btn btn-ghost">ورود</a>
         </div>
       </div>
       <div class="hero-visual">
@@ -704,14 +766,14 @@
             <div class="live-dot">زنده</div>
           </div>
           <div class="price-main">
-            <div class="price-label">هر میلی‌گرم طلای ۱۸ عیار</div>
-            <div class="price-value" id="goldPrice">۸,۴۵۰</div>
+            <div class="price-label">نمونه — قیمت لحظه‌ای (ابزار اعضا)</div>
+            <div class="price-value" id="goldPrice">۱۸,۵۰۰</div>
             <div class="price-unit">تومان</div>
             <div class="price-change">▲ ۱.۲٪</div>
           </div>
           <div class="price-actions">
-            <button class="price-btn price-btn-buy">خرید</button>
-            <button class="price-btn price-btn-sell">فروش</button>
+            <button class="price-btn price-btn-buy">ورود</button>
+            <button class="price-btn price-btn-sell">عضویت</button>
           </div>
         </div>
       </div>
@@ -722,20 +784,20 @@
   <div class="stats">
     <div class="container stats-grid">
       <div>
-        <div class="stat-value">+۱۲,۰۰۰</div>
-        <div class="stat-label">کاربر فعال</div>
+        <div class="stat-value">+۱۲۰</div>
+        <div class="stat-label">ویدیوی آموزشی</div>
       </div>
       <div>
-        <div class="stat-value">+۸۵۰ kg</div>
-        <div class="stat-label">حجم معاملات</div>
+        <div class="stat-value">+۴۰</div>
+        <div class="stat-label">ابزار تحلیل</div>
       </div>
       <div>
-        <div class="stat-value">۰.۰۰۱g</div>
-        <div class="stat-label">حداقل خرید</div>
+        <div class="stat-value">+۳,۰۰۰</div>
+        <div class="stat-label">عضو فعال</div>
       </div>
       <div>
         <div class="stat-value">۲۴/۷</div>
-        <div class="stat-label">دسترسی</div>
+        <div class="stat-label">دسترسی اعضا</div>
       </div>
     </div>
   </div>
@@ -743,41 +805,78 @@
   <!-- Features -->
   <section id="features">
     <div class="container">
-      <div class="section-label">امکانات</div>
-      <h2 class="section-title">هر آنچه برای معامله طلا نیاز دارید</h2>
+      <div class="section-label">ابزارها</div>
+      <h2 class="section-title">آنچه در پنل اعضا منتظر شماست</h2>
       <p class="section-desc">
-        ابزارهای حرفه‌ای برای خرید، فروش و نگهداری طلا — طراحی‌شده برای سرعت و شفافیت.
+        مجموعه‌ای از ابزارهای تحلیل و داده — برای درک بهتر بازار طلا، بدون شلوغی و پیچیدگی اضافه.
       </p>
       <div class="features-grid">
         <div class="feature-card">
-          <div class="feature-icon">⚖</div>
-          <h3>معامله میلی‌گرمی</h3>
-          <p>از یک میلی‌گرم شروع کنید. بدون حداقل سنگین، بدون محدودیت — طلا متناسب با بودجه شما.</p>
+          <div class="feature-icon">◎</div>
+          <h3>قیمت لحظه‌ای</h3>
+          <p>ردیابی قیمت طلا به‌صورت زنده — یکی از ابزارهای پایه برای اعضای فعال.</p>
         </div>
         <div class="feature-card">
           <div class="feature-icon">◈</div>
-          <h3>قیمت‌گذاری شفاف</h3>
-          <p>قیمت لحظه‌ای بر اساس بازار جهانی. بدون کارمزد پنهان، بدون اسپرد مبهم.</p>
+          <h3>نمودار و روند</h3>
+          <p>نمای بازار در بازه‌های مختلف — برای کسانی که الگو را می‌جویند.</p>
         </div>
         <div class="feature-card">
           <div class="feature-icon">⬡</div>
-          <h3>تسویه آنی</h3>
-          <p>خرید و فروش در چند ثانیه. موجودی شما بلافاصله به‌روز می‌شود.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">◉</div>
-          <h3>کیف پول دیجیتال</h3>
-          <p>طلای شما به‌صورت دیجیتال و با پشتوانه فیزیکی نگهداری می‌شود. هر زمان، هر مقدار.</p>
+          <h3>ماشین‌حساب طلا</h3>
+          <p>تبدیل واحد، عیار و ارزش — ساده، دقیق، همیشه در دسترس.</p>
         </div>
         <div class="feature-card">
           <div class="feature-icon">▣</div>
-          <h3>تحویل فیزیکی</h3>
-          <p>درخواست تحویل طلای فیزیکی در هر زمان. استاندارد جهانی، بسته‌بندی امن.</p>
+          <h3>تقویم بازار</h3>
+          <p>رویدادها و نقاط کلیدی که ممکن است بر طلا اثر بگذارند.</p>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">◎</div>
-          <h3>نمودار و تحلیل</h3>
-          <p>روند قیمت، تاریخچه معاملات و ابزارهای تحلیل — برای تصمیم‌گیری آگاهانه.</p>
+          <div class="feature-icon">◉</div>
+          <h3>کتابخانه منابع</h3>
+          <p>مقالات، راهنماها و مطالب مرجع — جمع‌آوری‌شده برای مطالعه عمیق‌تر.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">⚖</div>
+          <h3>داشبورد شخصی</h3>
+          <p>فضای کار اختصاصی هر عضو — ابزارها و یادداشت‌ها در یک جا.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Learn -->
+  <section id="learn">
+    <div class="container">
+      <div class="section-label">آموزش</div>
+      <h2 class="section-title">ویدیوها و محتوای آموزشی</h2>
+      <p class="section-desc">
+        مجموعه‌ای از درس‌ها و ویدیوها درباره طلا — از مبانی تا موضوعات پیشرفته‌تر. فقط برای اعضا.
+      </p>
+      <div class="learn-grid">
+        <div class="learn-card">
+          <div class="learn-thumb"><div class="learn-lock">◉</div></div>
+          <div class="learn-body">
+            <div class="learn-tag">مقدماتی</div>
+            <h3>آشنایی با بازار طلا</h3>
+            <p>مفاهیم پایه — برای شروعی آرام و مطمئن.</p>
+          </div>
+        </div>
+        <div class="learn-card">
+          <div class="learn-thumb"><div class="learn-lock">◉</div></div>
+          <div class="learn-body">
+            <div class="learn-tag">تحلیل</div>
+            <h3>خواندن نمودار قیمت</h3>
+            <p>الگوها، روندها و نگاهی به داده‌های بازار.</p>
+          </div>
+        </div>
+        <div class="learn-card">
+          <div class="learn-thumb"><div class="learn-lock">◉</div></div>
+          <div class="learn-body">
+            <div class="learn-tag">پیشرفته</div>
+            <h3>طلا در بافت کلان</h3>
+            <p>رابطه طلا با نقدینگی، تورم و چرخه‌های اقتصادی.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -786,29 +885,29 @@
   <!-- How it works -->
   <section id="how">
     <div class="container">
-      <div class="section-label">نحوه کار</div>
-      <h2 class="section-title">چهار قدم تا اولین معامله</h2>
-      <p class="section-desc">فرآیند ساده و سریع — از ثبت‌نام تا اولین خرید کمتر از پنج دقیقه.</p>
+      <div class="section-label">نحوه دسترسی</div>
+      <h2 class="section-title">چهار قدم تا پنل اعضا</h2>
+      <p class="section-desc">ساده و مستقیم — ابتدا حساب، سپس دسترسی به ابزارها و آموزش‌ها.</p>
       <div class="steps">
         <div class="step">
           <div class="step-num">۱</div>
           <h3>ثبت‌نام</h3>
-          <p>حساب کاربری خود را در کمتر از یک دقیقه بسازید.</p>
+          <p>یک حساب کاربری بسازید — کمتر از یک دقیقه.</p>
         </div>
         <div class="step">
           <div class="step-num">۲</div>
-          <h3>احراز هویت</h3>
-          <p>تأیید سریع هویت برای امنیت معاملات.</p>
+          <h3>ورود</h3>
+          <p>با اطلاعات خود وارد پنل شوید.</p>
         </div>
         <div class="step">
           <div class="step-num">۳</div>
-          <h3>شارژ کیف پول</h3>
-          <p>از طریق درگاه بانکی یا انتقال، حساب را شارژ کنید.</p>
+          <h3>فعال‌سازی</h3>
+          <p>عضویت خود را فعال کنید تا دسترسی کامل باز شود.</p>
         </div>
         <div class="step">
           <div class="step-num">۴</div>
-          <h3>خرید طلا</h3>
-          <p>مقدار دلخواه را انتخاب کنید و معامله کنید.</p>
+          <h3>ابزار و آموزش</h3>
+          <p>به مجموعه ابزارها، ویدیوها و محتوای آموزشی دسترسی پیدا کنید.</p>
         </div>
       </div>
     </div>
@@ -818,36 +917,36 @@
   <section id="trust" class="trust-section">
     <div class="container trust-grid">
       <div>
-        <div class="section-label">امنیت و اعتماد</div>
-        <h2 class="section-title">طلای شما، تحت حفاظت</h2>
-        <p class="section-desc">زیرساخت امنیتی در سطح بانکی — برای آرامش خاطر شما.</p>
+        <div class="section-label">چرا moonshot</div>
+        <h2 class="section-title">محتوا و ابزار، یک‌جا</h2>
+        <p class="section-desc">فضایی آرام برای کسانی که می‌خواهند درباره طلا بیشتر بدانند — بدون هیاهو.</p>
         <div class="trust-items">
           <div class="trust-item">
-            <div class="trust-item-icon">⛨</div>
+            <div class="trust-item-icon">◎</div>
             <div>
-              <h4>پشتوانه فیزیکی</h4>
-              <p>هر میلی‌گرم طلای دیجیتال با طلای فیزیکی ۱۸ عیار پشتیبانی می‌شود.</p>
+              <h4>محتوای منتخب</h4>
+              <p>ویدیوها و مطالب آموزشی با دقت گردآوری شده — نه انبوه، بلکه هدفمند.</p>
             </div>
           </div>
           <div class="trust-item">
             <div class="trust-item-icon">◈</div>
             <div>
-              <h4>رمزنگاری سطح بانکی</h4>
-              <p>تمام داده‌ها و تراکنش‌ها با استانداردهای AES-256 محافظت می‌شوند.</p>
+              <h4>ابزارهای عملی</h4>
+              <p>داده و تحلیل در خدمت درک — نه فقط نمایش اطلاعات.</p>
             </div>
           </div>
           <div class="trust-item">
-            <div class="trust-item-icon">◎</div>
+            <div class="trust-item-icon">⛨</div>
             <div>
-              <h4>حسابرسی مستقل</h4>
-              <p>موجودی طلا به‌صورت دوره‌ای توسط مؤسسات مستقل تأیید می‌شود.</p>
+              <h4>دسترسی اعضا</h4>
+              <p>پس از ورود و فعال‌سازی حساب، همه چیز در پنل شخصی شماست.</p>
             </div>
           </div>
           <div class="trust-item">
             <div class="trust-item-icon">▣</div>
             <div>
-              <h4>بیمه دارایی</h4>
-              <p>طلای نگهداری‌شده تحت پوشش بیمه کامل قرار دارد.</p>
+              <h4>به‌روز ماندن</h4>
+              <p>محتوا و ابزارها به‌مرور گسترش می‌یابند — همراه با بازار.</p>
             </div>
           </div>
         </div>
@@ -855,8 +954,8 @@
       <div class="trust-visual">
         <img src="assets/logov.png?v=2" alt="moonshot.gold" />
         <p>
-          moonshot.gold — جایی که تکنولوژی و ارزش سنتی به هم می‌رسند.
-          پلتفرمی برای نسل جدید سرمایه‌گذاران طلا.
+          moonshot.gold — جایی که کنجکاوی درباره طلا، ابزار و آموزش را دور هم می‌آورد.
+          برای کسانی که می‌خواهند عمیق‌تر نگاه کنند.
         </p>
       </div>
     </div>
@@ -866,9 +965,9 @@
   <section id="cta" class="cta-section">
     <div class="container">
       <div class="cta-box">
-        <h2>آماده‌اید؟</h2>
-        <p>همین حالا شروع کنید — اولین معامله طلای میلی‌گرمی شما فقط چند کلیک فاصله دارد.</p>
-        <a href="#" class="btn btn-primary">ایجاد حساب رایگان</a>
+        <h2>آماده‌اید وارد شوید؟</h2>
+        <p>حساب بسازید، عضویت را فعال کنید — و به ابزارها و ویدیوهای آموزشی دسترسی پیدا کنید.</p>
+        <a href="#" class="btn btn-primary">فعال‌سازی حساب</a>
       </div>
     </div>
   </section>
@@ -906,12 +1005,12 @@
 
     // Subtle price animation
     const priceEl = document.getElementById('goldPrice');
-    let base = 8450;
+    let price = 18500;
     setInterval(() => {
-      const delta = Math.floor(Math.random() * 21) - 10;
-      const val = base + delta;
-      priceEl.textContent = val.toLocaleString('fa-IR');
-    }, 4000);
+      const delta = Math.floor(Math.random() * 41) - 20;
+      price = Math.max(18400, Math.min(18600, price + delta));
+      priceEl.textContent = price.toLocaleString('fa-IR');
+    }, 3000);
   </script>
 </body>
 </html>
