@@ -613,6 +613,115 @@
       margin: 0 auto;
     }
 
+    /* ── Pricing ── */
+    .pricing-section {
+      background: linear-gradient(180deg, transparent, rgba(12,20,40,0.4), transparent);
+    }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    .pricing-card {
+      background: var(--navy-mid);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2.25rem;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .pricing-card:hover {
+      transform: translateY(-4px);
+    }
+    .pricing-card.featured {
+      border-color: rgba(201, 168, 76, 0.45);
+      background: linear-gradient(160deg, var(--navy-light) 0%, var(--navy-mid) 100%);
+      position: relative;
+    }
+    .pricing-card.featured::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 20px;
+      background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.1) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .pricing-badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--navy);
+      background: linear-gradient(135deg, var(--gold-light), var(--gold));
+      padding: 0.3rem 0.75rem;
+      border-radius: 100px;
+      margin-bottom: 1rem;
+      align-self: flex-start;
+      position: relative;
+    }
+    .pricing-tier {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+      position: relative;
+    }
+    .pricing-tier.silver { color: #b8c4d4; }
+    .pricing-tier.gold { color: var(--gold-light); }
+    .pricing-period {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+    .pricing-amount {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.15rem;
+      position: relative;
+    }
+    .pricing-amount span {
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+    .pricing-features {
+      list-style: none;
+      margin: 1.75rem 0 2rem;
+      flex: 1;
+      position: relative;
+    }
+    .pricing-features li {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      padding: 0.45rem 0;
+      border-bottom: 1px solid rgba(201, 168, 76, 0.06);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+    }
+    .pricing-features li::before {
+      content: '✓';
+      color: var(--gold);
+      font-size: 0.75rem;
+      flex-shrink: 0;
+      margin-top: 0.15rem;
+    }
+    .pricing-features li.muted {
+      opacity: 0.45;
+    }
+    .pricing-features li.muted::before {
+      content: '—';
+      color: var(--text-muted);
+    }
+    .pricing-card .btn {
+      width: 100%;
+      justify-content: center;
+      position: relative;
+    }
+
     /* ── CTA ── */
     .cta-section {
       padding: 5rem 0 7rem;
@@ -705,6 +814,7 @@
       .steps::before { display: none; }
       .stats-grid { grid-template-columns: repeat(2, 1fr); }
       .trust-grid { grid-template-columns: 1fr; }
+      .pricing-grid { grid-template-columns: 1fr; max-width: 400px; }
     }
     @media (max-width: 640px) {
       .nav-links { display: none; }
@@ -744,6 +854,7 @@
         <li><a href="#features">ابزارها</a></li>
         <li><a href="#learn">آموزش</a></li>
         <li><a href="#how">نحوه دسترسی</a></li>
+        <li><a href="#pricing">عضویت</a></li>
         <li><a href="#cta" class="nav-cta">ورود / عضویت</a></li>
       </ul>
       <button class="menu-toggle" id="menuToggle" aria-label="منو">☰</button>
@@ -970,12 +1081,55 @@
     </div>
   </section>
 
+  <!-- Pricing -->
+  <section id="pricing" class="pricing-section">
+    <div class="container">
+      <div class="section-label">عضویت</div>
+      <h2 class="section-title">پلن‌های یک‌ماهه</h2>
+      <p class="section-desc">
+        هر دو پلن دسترسی کامل به پنل اعضا را باز می‌کنند — تفاوت در عمق ابزارها و انعطاف استفاده است.
+      </p>
+      <div class="pricing-grid">
+        <div class="pricing-card">
+          <div class="pricing-tier silver">نقره‌ای</div>
+          <div class="pricing-period">عضویت یک‌ماهه</div>
+          <div class="pricing-amount">۲۵۰,۰۰۰ <span>تومان</span></div>
+          <ul class="pricing-features">
+            <li>دسترسی به ابزارهای پایه تحلیل</li>
+            <li>ویدیوهای آموزشی مقدماتی و تحلیلی</li>
+            <li>داشبورد شخصی و تقویم بازار</li>
+            <li>استفاده همزمان از یک دستگاه</li>
+            <li>پشتیبانی استاندارد</li>
+            <li class="muted">کتابخانه کامل ویدیوهای پیشرفته</li>
+            <li class="muted">دسترسی اولویت‌دار به محتوای جدید</li>
+          </ul>
+          <a href="#" class="btn btn-ghost">انتخاب نقره‌ای</a>
+        </div>
+        <div class="pricing-card featured">
+          <span class="pricing-badge">پیشنهادی</span>
+          <div class="pricing-tier gold">طلایی</div>
+          <div class="pricing-period">عضویت یک‌ماهه</div>
+          <div class="pricing-amount">۴۵۰,۰۰۰ <span>تومان</span></div>
+          <ul class="pricing-features">
+            <li>همه ابزارها — پایه و پیشرفته</li>
+            <li>کتابخانه کامل ویدیوها و منابع</li>
+            <li>داشبورد گسترده با ابزارهای اختصاصی</li>
+            <li>استفاده همزمان از دو دستگاه</li>
+            <li>دسترسی زودتر به محتوا و به‌روزرسانی‌ها</li>
+            <li>پشتیبانی سریع‌تر</li>
+          </ul>
+          <a href="#" class="btn btn-primary">انتخاب طلایی</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- CTA -->
   <section id="cta" class="cta-section">
     <div class="container">
       <div class="cta-box">
         <h2>آماده‌اید وارد شوید؟</h2>
-        <p>حساب بسازید، عضویت را فعال کنید — و به ابزارها و ویدیوهای آموزشی دسترسی پیدا کنید.</p>
+        <p>پلن نقره‌ای یا طلایی را انتخاب کنید، حساب را فعال کنید — و به ابزارها و ویدیوهای آموزشی دسترسی پیدا کنید.</p>
         <a href="#" class="btn btn-primary">فعال‌سازی حساب</a>
       </div>
     </div>
