@@ -329,6 +329,9 @@
       gap: 0.75rem;
     }
     .price-btn {
+      display: block;
+      text-align: center;
+      text-decoration: none;
       padding: 0.85rem;
       border-radius: 10px;
       border: none;
@@ -847,7 +850,7 @@
   <!-- Navigation -->
   <nav id="nav">
     <div class="container nav-inner">
-      <a href="#" class="nav-logo">
+      <a href="/" class="nav-logo">
         <img src="assets/logov.png?v=2" alt="moonshot.gold" />
       </a>
       <ul class="nav-links" id="navLinks">
@@ -855,7 +858,7 @@
         <li><a href="#learn">آموزش</a></li>
         <li><a href="#how">نحوه دسترسی</a></li>
         <li><a href="#pricing">عضویت</a></li>
-        <li><a href="#cta" class="nav-cta">ورود / عضویت</a></li>
+        <li><a href="/login" class="nav-cta">ورود / عضویت</a></li>
       </ul>
       <button class="menu-toggle" id="menuToggle" aria-label="منو">☰</button>
     </div>
@@ -875,8 +878,8 @@
           درباره طلا — مخصوص اعضایی که می‌خواهند بیشتر بدانند.
         </p>
         <div class="hero-actions">
-          <a href="#cta" class="btn btn-primary">فعال‌سازی حساب</a>
-          <a href="#" class="btn btn-ghost">ورود</a>
+          <a href="#pricing" class="btn btn-primary">فعال‌سازی حساب</a>
+          <a href="/login" class="btn btn-ghost">ورود</a>
         </div>
       </div>
       <div class="hero-visual">
@@ -892,8 +895,8 @@
             <div class="price-change">▲ ۱.۲٪</div>
           </div>
           <div class="price-actions">
-            <button class="price-btn price-btn-buy">ورود</button>
-            <button class="price-btn price-btn-sell">عضویت</button>
+            <a href="/login" class="price-btn price-btn-buy">ورود</a>
+            <a href="#pricing" class="price-btn price-btn-sell">عضویت</a>
           </div>
         </div>
       </div>
@@ -1130,7 +1133,7 @@
       <div class="cta-box">
         <h2>آماده‌اید وارد شوید؟</h2>
         <p>پلن نقره‌ای یا طلایی را انتخاب کنید، حساب را فعال کنید — و به ابزارها و ویدیوهای آموزشی دسترسی پیدا کنید.</p>
-        <a href="#" class="btn btn-primary">فعال‌سازی حساب</a>
+        <a href="#pricing" class="btn btn-primary">فعال‌سازی حساب</a>
       </div>
     </div>
   </section>
