@@ -111,6 +111,12 @@ body {
   gap: 1rem;
 }
 
+.phone-number {
+  direction: ltr;
+  unicode-bidi: isolate;
+  display: inline-block;
+}
+
 .auth-input-field {
   width: 100%;
   padding: 0.9rem 1rem;
@@ -125,6 +131,7 @@ body {
   outline: none;
   transition: border-color 0.2s, box-shadow 0.2s;
   direction: ltr;
+  unicode-bidi: plaintext;
 }
 
 .auth-input-field::placeholder {

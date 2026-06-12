@@ -23,7 +23,8 @@ export function HomePage() {
       <main className="home-main">
         <section className="welcome-card">
           <h1>
-            خوش آمدید، <span className="highlight">{phoneDisplay}</span>
+            خوش آمدید،{" "}
+            <span className="highlight phone-number">{phoneDisplay}</span>
           </h1>
           <p>
             شما با موفقیت وارد پنل اعضای مون‌شات شدید. ابزارها، تحلیل‌ها و

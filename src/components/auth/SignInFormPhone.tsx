@@ -5,6 +5,7 @@ import {
   formatIranianPhone,
   isValidIranianPhone,
   normalizeIranianPhone,
+  PHONE_PLACEHOLDER,
 } from "@/lib/phone";
 
 export function SignInFormPhone() {
@@ -20,7 +21,7 @@ export function SignInFormPhone() {
     e.preventDefault();
 
     if (!isValidIranianPhone(displayPhone)) {
-      toast.error("شماره موبایل معتبر نیست. مثال: ۰۹۱۲ ۲۷۷ ۶۴۲۵");
+      toast.error(`شماره موبایل معتبر نیست. مثال: ${PHONE_PLACEHOLDER}`);
       return;
     }
 
@@ -73,7 +74,7 @@ export function SignInFormPhone() {
             inputMode="numeric"
             value={displayPhone}
             onChange={handlePhoneChange}
-            placeholder="۰۹۱۲ ۲۷۷ ۶۴۲۵"
+            placeholder={PHONE_PLACEHOLDER}
             required
             autoComplete="tel"
           />
@@ -85,7 +86,7 @@ export function SignInFormPhone() {
         <form className="auth-form" onSubmit={(e) => void handleVerifyCode(e)}>
           <p className="auth-subtitle" style={{ marginBottom: 0 }}>
             کد ارسال‌شده به{" "}
-            <span dir="ltr" style={{ color: "var(--gold-light)" }}>
+            <span className="phone-number" style={{ color: "var(--gold-light)" }}>
               {displayPhone}
             </span>
           </p>

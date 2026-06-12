@@ -1,3 +1,5 @@
+export const PHONE_PLACEHOLDER = "0912 277 0000";
+
 /** Format Iranian mobile as 0912 277 6425 */
 export function formatIranianPhone(value: string): string {
   const digits = value.replace(/\D/g, "").slice(0, 11);
