@@ -3,6 +3,5 @@ node_modules
 dist
 .env.local
 .env*.local
-convex/_generated
 ___carnival
 .env
