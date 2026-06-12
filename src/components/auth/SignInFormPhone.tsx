@@ -1,5 +1,5 @@
 import { useAuthActions } from "@convex-dev/auth/react";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { useOtpAutofill } from "@/hooks/useOtpAutofill";
 import {
@@ -15,8 +15,43 @@ export function SignInFormPhone() {
   const [verificationCode, setVerificationCode] = useState("");
   const [isVerifying, setIsVerifying] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const verifyAttemptRef = useRef(false);
 
   const phone = normalizeIranianPhone(displayPhone);
+
+  const resetVerifyAttempt = () => {
+    verifyAttemptRef.current = false;
+  };
+
+  const submitVerificationCode = useCallback(
+    async (code: string) => {
+      if (verifyAttemptRef.current || code.length !== 5) {
+        return;
+      }
+
+      verifyAttemptRef.current = true;
+      setIsSubmitting(true);
+
+      try {
+        const formData = new FormData();
+        formData.set("phone", phone);
+        formData.set("code", code);
+        await signIn("kavenegar-otp", formData);
+        toast.success("با موفقیت وارد شدید");
+      } catch {
+        resetVerifyAttempt();
+        setIsSubmitting(false);
+        toast.error("کد تایید نامعتبر است. لطفاً دوباره تلاش کنید.");
+      }
+    },
+    [phone, signIn],
+  );
+
+  useEffect(() => {
+    if (isVerifying && verificationCode.length === 5) {
+      void submitVerificationCode(verificationCode);
+    }
+  }, [isVerifying, verificationCode, submitVerificationCode]);
 
   const handleSendCode = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,6 +67,7 @@ export function SignInFormPhone() {
       const formData = new FormData();
       formData.set("phone", phone);
       await signIn("kavenegar-otp", formData);
+      resetVerifyAttempt();
       setIsVerifying(true);
       toast.success("کد تایید ارسال شد");
     } catch {
@@ -41,45 +77,16 @@ export function SignInFormPhone() {
     }
   };
 
-  const handleVerifyCode = async (e?: React.FormEvent, code?: string) => {
-    if (e) {
-      e.preventDefault();
-    }
-
-    const codeToSubmit = code ?? verificationCode;
-    setIsSubmitting(true);
-
-    try {
-      const formData = new FormData();
-      formData.set("phone", phone);
-      formData.set("code", codeToSubmit);
-      await signIn("kavenegar-otp", formData);
-      toast.success("با موفقیت وارد شدید");
-    } catch {
-      toast.error("کد تایید نامعتبر است. لطفاً دوباره تلاش کنید.");
-      setIsSubmitting(false);
-    }
-  };
-
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDisplayPhone(formatIranianPhone(e.target.value));
   };
 
-  const applyOtpCode = useCallback(
-    (code: string) => {
-      const digits = code.replace(/\D/g, "").slice(0, 5);
-      if (digits.length === 0) {
-        return;
-      }
+  const applyOtpCode = useCallback((code: string) => {
+    const digits = code.replace(/\D/g, "").slice(0, 5);
+    if (digits.length > 0) {
       setVerificationCode(digits);
-      if (digits.length === 5) {
-        void handleVerifyCode(undefined, digits);
-      }
-    },
-    // handleVerifyCode is stable enough for OTP autofill during verify step
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [phone],
-  );
+    }
+  }, []);
 
   useOtpAutofill(isVerifying, applyOtpCode);
 
@@ -105,7 +112,10 @@ export function SignInFormPhone() {
         <form
           className="auth-form"
           autoComplete="on"
-          onSubmit={(e) => void handleVerifyCode(e)}
+          onSubmit={(e) => {
+            e.preventDefault();
+            void submitVerificationCode(verificationCode);
+          }}
         >
           <p className="auth-subtitle" style={{ marginBottom: 0 }}>
             کد ارسال‌شده به{" "}
@@ -126,19 +136,15 @@ export function SignInFormPhone() {
             pattern="\d{5}"
             value={verificationCode}
             onChange={(e) => {
-              const value = e.target.value.replace(/\D/g, "").slice(0, 5);
-              setVerificationCode(value);
-
-              if (value.length === 5) {
-                setTimeout(() => {
-                  void handleVerifyCode(undefined, value);
-                }, 100);
-              }
+              setVerificationCode(
+                e.target.value.replace(/\D/g, "").slice(0, 5),
+              );
             }}
             placeholder="00000"
             required
             autoFocus
             dir="ltr"
+            disabled={isSubmitting}
           />
           <button className="auth-button" type="submit" disabled={isSubmitting}>
             {isSubmitting ? "در حال تایید..." : "تایید کد"}
@@ -149,6 +155,8 @@ export function SignInFormPhone() {
             onClick={() => {
               setIsVerifying(false);
               setVerificationCode("");
+              resetVerifyAttempt();
+              setIsSubmitting(false);
             }}
           >
             تغییر شماره تلفن
