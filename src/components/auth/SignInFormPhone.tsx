@@ -1,6 +1,7 @@
 import { useAuthActions } from "@convex-dev/auth/react";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { toast } from "sonner";
+import { useOtpAutofill } from "@/hooks/useOtpAutofill";
 import {
   formatIranianPhone,
   isValidIranianPhone,
@@ -64,6 +65,24 @@ export function SignInFormPhone() {
     setDisplayPhone(formatIranianPhone(e.target.value));
   };
 
+  const applyOtpCode = useCallback(
+    (code: string) => {
+      const digits = code.replace(/\D/g, "").slice(0, 5);
+      if (digits.length === 0) {
+        return;
+      }
+      setVerificationCode(digits);
+      if (digits.length === 5) {
+        void handleVerifyCode(undefined, digits);
+      }
+    },
+    // handleVerifyCode is stable enough for OTP autofill during verify step
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [phone],
+  );
+
+  useOtpAutofill(isVerifying, applyOtpCode);
+
   return (
     <div>
       {!isVerifying ? (
@@ -83,7 +102,11 @@ export function SignInFormPhone() {
           </button>
         </form>
       ) : (
-        <form className="auth-form" onSubmit={(e) => void handleVerifyCode(e)}>
+        <form
+          className="auth-form"
+          autoComplete="on"
+          onSubmit={(e) => void handleVerifyCode(e)}
+        >
           <p className="auth-subtitle" style={{ marginBottom: 0 }}>
             کد ارسال‌شده به{" "}
             <span className="phone-number" style={{ color: "var(--gold-light)" }}>
@@ -93,7 +116,14 @@ export function SignInFormPhone() {
           <input
             className="auth-input-field"
             type="text"
+            name="one-time-code"
             inputMode="numeric"
+            autoComplete="one-time-code"
+            autoCapitalize="off"
+            autoCorrect="off"
+            spellCheck={false}
+            maxLength={5}
+            pattern="\d{5}"
             value={verificationCode}
             onChange={(e) => {
               const value = e.target.value.replace(/\D/g, "").slice(0, 5);
@@ -105,7 +135,7 @@ export function SignInFormPhone() {
                 }, 100);
               }
             }}
-            placeholder="۰۰۰۰۰"
+            placeholder="00000"
             required
             autoFocus
             dir="ltr"
