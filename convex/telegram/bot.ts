@@ -3,7 +3,6 @@
 import { v } from "convex/values";
 import { internal } from "../_generated/api";
 import { internalAction } from "../_generated/server";
-import { getProxiedUrl } from "../lib/outboundProxy";
 import {
   buildApproveCallbackData,
   buildRejectCallbackData,
@@ -17,19 +16,25 @@ type TelegramSendMessageResponse = {
     chat: { id: number };
   };
   description?: string;
+  error_code?: number;
 };
 
 type TelegramApiResponse = {
   ok: boolean;
   description?: string;
+  error_code?: number;
 };
 
+type TelegramCallResult<T> =
+  | { success: true; data: T }
+  | { success: false; message: string };
+
 function getBotToken(): string | null {
-  return process.env.TELEGRAM_BOT_TOKEN ?? null;
+  return process.env.TELEGRAM_BOT_TOKEN?.trim() ?? null;
 }
 
 function getAdminChannelId(): string | null {
-  return process.env.TELEGRAM_ADMIN_CHANNEL_ID ?? null;
+  return process.env.TELEGRAM_ADMIN_CHANNEL_ID?.trim() ?? null;
 }
 
 function getTelegramApiUrl(method: string): string {
@@ -37,7 +42,45 @@ function getTelegramApiUrl(method: string): string {
   if (!token) {
     throw new Error("TELEGRAM_BOT_TOKEN is not configured");
   }
-  return getProxiedUrl(`https://api.telegram.org/bot${token}/${method}`);
+
+  const targetUrl = `https://api.telegram.org/bot${token}/${method}`;
+  const telegramProxy = process.env.TELEGRAM_PROXY_URL?.trim();
+
+  if (telegramProxy) {
+    return `${telegramProxy.replace(/\/$/, "")}/${targetUrl}`;
+  }
+
+  return targetUrl;
+}
+
+function maskTelegramUrl(url: string): string {
+  return url.replace(/bot[^/]+/, "bot***");
+}
+
+function mapTelegramError(description: string | undefined): string {
+  if (!description) {
+    return "ارسال پیام به تلگرام ناموفق بود";
+  }
+
+  const lower = description.toLowerCase();
+
+  if (lower.includes("chat not found")) {
+    return "کانال تلگرام پیدا نشد. شناسه کانال (TELEGRAM_ADMIN_CHANNEL_ID) را بررسی کنید.";
+  }
+
+  if (lower.includes("not a member") || lower.includes("have rights")) {
+    return "ربات در کانال عضو نیست یا دسترسی ارسال پیام ندارد. ربات را ادمین کانال کنید.";
+  }
+
+  if (lower.includes("unauthorized")) {
+    return "توکن ربات تلگرام (TELEGRAM_BOT_TOKEN) نامعتبر است.";
+  }
+
+  if (lower.includes("button_data_invalid")) {
+    return "دکمه‌های تأیید/رد نامعتبر است. با پشتیبانی تماس بگیرید.";
+  }
+
+  return `خطای تلگرام: ${description}`;
 }
 
 function formatVerificationMessage(args: {
@@ -58,20 +101,69 @@ function formatVerificationMessage(args: {
   ].join("\n");
 }
 
-async function callTelegramApi<T>(
+async function callTelegramApi<T extends TelegramApiResponse>(
   method: string,
   body: Record<string, unknown>,
-): Promise<T> {
-  const response = await fetch(getTelegramApiUrl(method), {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    },
-    body: JSON.stringify(body),
-  });
+): Promise<TelegramCallResult<T>> {
+  const url = getTelegramApiUrl(method);
 
-  return (await response.json()) as T;
+  let response: Response;
+  try {
+    response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+  } catch (error) {
+    const detail =
+      error instanceof Error ? error.message : "Unknown network error";
+    console.error("Telegram API network error", {
+      method,
+      url: maskTelegramUrl(url),
+      detail,
+    });
+    return {
+      success: false,
+      message:
+        "ارتباط با تلگرام برقرار نشد. اگر در ایران هستید، TELEGRAM_PROXY_URL را روی deployment تنظیم کنید.",
+    };
+  }
+
+  const rawBody = await response.text();
+  let data: T;
+  try {
+    data = JSON.parse(rawBody) as T;
+  } catch {
+    console.error("Telegram API returned non-JSON", {
+      method,
+      status: response.status,
+      url: maskTelegramUrl(url),
+      bodyPreview: rawBody.slice(0, 300),
+    });
+    return {
+      success: false,
+      message: `پاسخ نامعتبر از تلگرام (HTTP ${response.status})`,
+    };
+  }
+
+  if (!data.ok) {
+    console.error("Telegram API request failed", {
+      method,
+      status: response.status,
+      description: data.description,
+      errorCode: data.error_code,
+      url: maskTelegramUrl(url),
+    });
+    return {
+      success: false,
+      message: mapTelegramError(data.description),
+    };
+  }
+
+  return { success: true, data };
 }
 
 export const sendVerificationRequest = internalAction({
@@ -95,46 +187,50 @@ export const sendVerificationRequest = internalAction({
       };
     }
 
-    let response: TelegramSendMessageResponse;
-    try {
-      response = await callTelegramApi<TelegramSendMessageResponse>(
-        "sendMessage",
-        {
-          chat_id: channelId,
-          text: formatVerificationMessage({
-            fullName: args.fullName,
-            phone: args.phone,
-            nationalCode: args.nationalCode,
-            userId: args.userId,
-            requestId: args.requestId,
-          }),
-          reply_markup: {
-            inline_keyboard: [
-              [
-                {
-                  text: "✅ تأیید",
-                  callback_data: buildApproveCallbackData(args.requestId),
-                },
-                {
-                  text: "❌ رد",
-                  callback_data: buildRejectCallbackData(args.requestId),
-                },
-              ],
-            ],
-          },
-        },
-      );
-    } catch {
+    const approveData = buildApproveCallbackData(args.requestId);
+    const rejectData = buildRejectCallbackData(args.requestId);
+    if (approveData.length > 64 || rejectData.length > 64) {
+      console.error("Telegram callback_data too long", {
+        approveLength: approveData.length,
+        rejectLength: rejectData.length,
+      });
       return {
         success: false,
-        message: "ارسال پیام به تلگرام ناموفق بود",
+        message: "شناسه درخواست برای دکمه‌های تلگرام خیلی طولانی است",
       };
     }
 
-    if (!response.ok || !response.result) {
+    const result = await callTelegramApi<TelegramSendMessageResponse>(
+      "sendMessage",
+      {
+        chat_id: channelId,
+        text: formatVerificationMessage({
+          fullName: args.fullName,
+          phone: args.phone,
+          nationalCode: args.nationalCode,
+          userId: args.userId,
+          requestId: args.requestId,
+        }),
+        reply_markup: {
+          inline_keyboard: [
+            [
+              { text: "✅ تأیید", callback_data: approveData },
+              { text: "❌ رد", callback_data: rejectData },
+            ],
+          ],
+        },
+      },
+    );
+
+    if (!result.success) {
+      return { success: false, message: result.message };
+    }
+
+    const response = result.data;
+    if (!response.result) {
       return {
         success: false,
-        message: response.description ?? "ارسال پیام به تلگرام ناموفق بود",
+        message: "پاسخ تلگرام ناقص بود",
       };
     }
 
@@ -196,15 +292,18 @@ export const updateVerificationMessage = internalAction({
       statusLine,
     ].join("\n");
 
-    try {
-      await callTelegramApi<TelegramApiResponse>("editMessageText", {
-        chat_id: request.telegramChatId,
-        message_id: request.telegramMessageId,
-        text,
-        reply_markup: { inline_keyboard: [] },
+    const result = await callTelegramApi<TelegramApiResponse>("editMessageText", {
+      chat_id: request.telegramChatId,
+      message_id: request.telegramMessageId,
+      text,
+      reply_markup: { inline_keyboard: [] },
+    });
+
+    if (!result.success) {
+      console.error("Failed to update Telegram verification message", {
+        requestId: args.requestId,
+        message: result.message,
       });
-    } catch {
-      return null;
     }
 
     return null;
@@ -222,14 +321,19 @@ export const answerCallbackQuery = internalAction({
       return null;
     }
 
-    try {
-      await callTelegramApi<TelegramApiResponse>("answerCallbackQuery", {
+    const result = await callTelegramApi<TelegramApiResponse>(
+      "answerCallbackQuery",
+      {
         callback_query_id: args.callbackQueryId,
         text: args.text,
         show_alert: false,
+      },
+    );
+
+    if (!result.success) {
+      console.error("Failed to answer Telegram callback", {
+        message: result.message,
       });
-    } catch {
-      return null;
     }
 
     return null;
