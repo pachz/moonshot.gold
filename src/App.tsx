@@ -5,6 +5,7 @@ import { CheckoutPage } from "./pages/CheckoutPage";
 import { CompleteProfilePage } from "./pages/CompleteProfilePage";
 import { HomePage } from "./pages/HomePage";
 import { LoginPage } from "./pages/LoginPage";
+import { PaymentCallbackPage } from "./pages/PaymentCallbackPage";
 import { WalletPage } from "./pages/WalletPage";
 
 export default function App() {
@@ -14,6 +15,7 @@ export default function App() {
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/complete-profile" element={<CompleteProfilePage />} />
+        <Route path="/payment/callback" element={<PaymentCallbackPage />} />
         <Route
           path="/home"
           element={

@@ -49,12 +49,12 @@ function getZibalCallbackUrl(): string | null {
     return process.env.ZIBAL_CALLBACK_URL;
   }
 
-  const siteUrl = process.env.CONVEX_SITE_URL;
+  const siteUrl = process.env.SITE_URL;
   if (!siteUrl) {
     return null;
   }
 
-  return `${siteUrl.replace(/\/$/, "")}/zibal/callback`;
+  return `${siteUrl.replace(/\/$/, "")}/payment/callback`;
 }
 
 function getPaymentStartUrl(trackId: string): string {

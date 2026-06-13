@@ -3,6 +3,7 @@
     { "source": "/login", "destination": "/app.html" },
     { "source": "/complete-profile", "destination": "/app.html" },
     { "source": "/home", "destination": "/app.html" },
-    { "source": "/home/:path*", "destination": "/app.html" }
+    { "source": "/home/:path*", "destination": "/app.html" },
+    { "source": "/payment/callback", "destination": "/app.html" }
   ]
 }

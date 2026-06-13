@@ -3,6 +3,7 @@ export const SPA_ROUTE_PREFIXES = [
   "/login",
   "/complete-profile",
   "/home",
+  "/payment",
 ] as const;
 
 export function isSpaRoute(url: string): boolean {

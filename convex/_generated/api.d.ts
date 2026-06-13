@@ -16,7 +16,7 @@ import type * as identity_shahkarMessages from "../identity/shahkarMessages.js";
 import type * as lib_outboundProxy from "../lib/outboundProxy.js";
 import type * as lib_userFacingError from "../lib/userFacingError.js";
 import type * as otp_CustomOTP from "../otp/CustomOTP.js";
-import type * as payments_callback from "../payments/callback.js";
+import type * as payments_confirm from "../payments/confirm.js";
 import type * as payments_currency from "../payments/currency.js";
 import type * as payments_initiate from "../payments/initiate.js";
 import type * as payments_orders from "../payments/orders.js";
@@ -42,7 +42,7 @@ declare const fullApi: ApiFromModules<{
   "lib/outboundProxy": typeof lib_outboundProxy;
   "lib/userFacingError": typeof lib_userFacingError;
   "otp/CustomOTP": typeof otp_CustomOTP;
-  "payments/callback": typeof payments_callback;
+  "payments/confirm": typeof payments_confirm;
   "payments/currency": typeof payments_currency;
   "payments/initiate": typeof payments_initiate;
   "payments/orders": typeof payments_orders;
