@@ -12,7 +12,7 @@ import { formatIranianPhone } from "@/lib/phone";
 
 export function CompleteProfileForm() {
   const user = useQuery(api.profile.loggedInUser);
-  const completeProfile = useAction(api.profile.completeProfile);
+  const completeProfile = useAction(api.profileActions.completeProfile);
   const [fullName, setFullName] = useState("");
   const [nationalCode, setNationalCode] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -35,17 +35,19 @@ export function CompleteProfileForm() {
     setIsSubmitting(true);
 
     try {
-      await completeProfile({
+      const result = await completeProfile({
         fullName: normalizeFullName(fullName),
         nationalCode: formatNationalCode(nationalCode),
       });
+
+      if (!result.success) {
+        toast.error(result.message);
+        return;
+      }
+
       toast.success("اطلاعات شما با موفقیت تأیید شد");
-    } catch (error) {
-      const message =
-        error instanceof Error
-          ? error.message
-          : "خطا در تأیید اطلاعات. لطفاً دوباره تلاش کنید.";
-      toast.error(message);
+    } catch {
+      toast.error("خطا در تأیید اطلاعات. لطفاً دوباره تلاش کنید.");
     } finally {
       setIsSubmitting(false);
     }

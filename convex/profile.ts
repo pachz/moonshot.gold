@@ -1,7 +1,10 @@
 import { getAuthUserId } from "@convex-dev/auth/server";
 import { v } from "convex/values";
-import { internal } from "./_generated/api";
-import { action, internalMutation, query } from "./_generated/server";
+import { internalMutation, query } from "./_generated/server";
+import {
+  formatRateLimitMessage,
+  throwUserFacingError,
+} from "./lib/userFacingError";
 import { rateLimiter } from "./ratelimiter";
 
 const loggedInUserValidator = v.union(
@@ -74,45 +77,53 @@ export const prepareProfileValidation = internalMutation({
   handler: async (ctx, args) => {
     const userId = await getAuthUserId(ctx);
     if (!userId) {
-      throw new Error("Not authenticated");
+      throwUserFacingError("لطفاً دوباره وارد شوید");
     }
 
     const user = await ctx.db.get("users", userId);
     if (!user) {
-      throw new Error("User not found");
+      throwUserFacingError("کاربر یافت نشد");
     }
 
     if (isProfileValidated(user.profileValidated)) {
-      throw new Error("پروفایل شما قبلاً تأیید شده است");
+      throwUserFacingError("پروفایل شما قبلاً تأیید شده است");
     }
 
     if (!user.phone) {
-      throw new Error("شماره موبایل یافت نشد");
+      throwUserFacingError("شماره موبایل یافت نشد");
     }
 
     const fullName = normalizeFullName(args.fullName);
     const nationalCode = normalizeNationalCode(args.nationalCode);
 
     if (!isValidFullName(fullName)) {
-      throw new Error("نام و نام خانوادگی معتبر نیست");
+      throwUserFacingError("نام و نام خانوادگی معتبر نیست");
     }
 
     if (!isValidNationalCode(nationalCode)) {
-      throw new Error("کد ملی باید ۱۰ رقم باشد");
+      throwUserFacingError("کد ملی باید ۱۰ رقم باشد");
     }
 
-    try {
-      await rateLimiter.limit(ctx, "validateProfile", {
-        key: user.phone,
-        throws: true,
-      });
-      await rateLimiter.limit(ctx, "validateProfileDaily", {
-        key: user.phone,
-        throws: true,
-      });
-    } catch {
-      throw new Error(
-        "تعداد درخواست‌های شما بیش از حد مجاز است. لطفاً کمی بعد دوباره تلاش کنید.",
+    const minuteStatus = await rateLimiter.limit(ctx, "validateProfile", {
+      key: user.phone,
+      throws: false,
+    });
+    if (!minuteStatus.ok) {
+      throwUserFacingError(
+        formatRateLimitMessage("validateProfile", minuteStatus.retryAfter),
+      );
+    }
+
+    const dailyStatus = await rateLimiter.limit(ctx, "validateProfileDaily", {
+      key: user.phone,
+      throws: false,
+    });
+    if (!dailyStatus.ok) {
+      throwUserFacingError(
+        formatRateLimitMessage(
+          "validateProfileDaily",
+          dailyStatus.retryAfter,
+        ),
       );
     }
 
@@ -135,16 +146,16 @@ export const finalizeValidatedProfile = internalMutation({
   handler: async (ctx, args) => {
     const userId = await getAuthUserId(ctx);
     if (!userId || userId !== args.userId) {
-      throw new Error("Unauthorized");
+      throwUserFacingError("دسترسی غیرمجاز");
     }
 
     const user = await ctx.db.get("users", args.userId);
     if (!user) {
-      throw new Error("User not found");
+      throwUserFacingError("کاربر یافت نشد");
     }
 
     if (isProfileValidated(user.profileValidated)) {
-      throw new Error("پروفایل شما قبلاً تأیید شده است");
+      throwUserFacingError("پروفایل شما قبلاً تأیید شده است");
     }
 
     await ctx.db.patch(args.userId, {
@@ -154,38 +165,5 @@ export const finalizeValidatedProfile = internalMutation({
     });
 
     return null;
-  },
-});
-
-export const completeProfile = action({
-  args: {
-    fullName: v.string(),
-    nationalCode: v.string(),
-  },
-  returns: v.object({
-    success: v.literal(true),
-  }),
-  handler: async (ctx, args) => {
-    const prepared = await ctx.runMutation(
-      internal.profile.prepareProfileValidation,
-      args,
-    );
-
-    const verification = await ctx.runAction(internal.identity.shahkar.verify, {
-      mobile: prepared.phone,
-      nationalCode: prepared.nationalCode,
-    });
-
-    if (!verification.matched) {
-      throw new Error(verification.message);
-    }
-
-    await ctx.runMutation(internal.profile.finalizeValidatedProfile, {
-      userId: prepared.userId,
-      fullName: prepared.fullName,
-      nationalCode: prepared.nationalCode,
-    });
-
-    return { success: true as const };
   },
 });

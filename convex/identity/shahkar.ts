@@ -3,6 +3,7 @@
 import { internalAction } from "../_generated/server";
 import { v } from "convex/values";
 import { getProxiedUrl } from "../lib/outboundProxy";
+import { mapShahkarResponse } from "./shahkarMessages";
 
 const SHAHKAR_API_URL =
   process.env.SHAHKAR_API_URL ??
@@ -31,35 +32,60 @@ export const verify = internalAction({
   handler: async (_ctx, args) => {
     const token = process.env.ZOHAL_API_TOKEN;
     if (!token) {
-      throw new Error("ZOHAL_API_TOKEN is not configured");
+      return {
+        matched: false,
+        message: "سرویس تأیید هویت در دسترس نیست. لطفاً بعداً تلاش کنید.",
+      };
     }
 
-    const response = await fetch(getProxiedUrl(SHAHKAR_API_URL), {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        mobile: args.mobile,
-        national_code: args.nationalCode,
-      }),
-    });
+    let response: Response;
+    try {
+      response = await fetch(getProxiedUrl(SHAHKAR_API_URL), {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          mobile: args.mobile,
+          national_code: args.nationalCode,
+        }),
+      });
+    } catch {
+      return {
+        matched: false,
+        message: "ارتباط با سرویس تأیید هویت برقرار نشد. لطفاً دوباره تلاش کنید.",
+      };
+    }
 
-    const data = (await response.json()) as ShahkarResponse;
-    const message = data.response_body?.message ?? "خطا در اعتبارسنجی اطلاعات";
+    let data: ShahkarResponse;
+    try {
+      data = (await response.json()) as ShahkarResponse;
+    } catch {
+      return {
+        matched: false,
+        message: "پاسخ نامعتبر از سرویس تأیید هویت دریافت شد.",
+      };
+    }
+
+    const errorCode = data.response_body?.error_code ?? null;
+    const apiMessage = data.response_body?.message ?? "";
 
     if (!response.ok || data.result !== 1) {
       return {
         matched: false,
-        message,
+        message: mapShahkarResponse(false, errorCode, apiMessage),
       };
     }
 
     const matched = data.response_body?.data?.matched === true;
     return {
       matched,
-      message: matched ? message : "کد ملی با شماره موبایل مطابقت ندارد",
+      message: mapShahkarResponse(
+        matched,
+        errorCode,
+        matched ? apiMessage || "اطلاعات با موفقیت تأیید شد" : apiMessage,
+      ),
     };
   },
 });
