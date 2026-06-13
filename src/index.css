@@ -648,7 +648,24 @@ body {
 
 .wallet-summary-card,
 .wallet-card {
-  margin-top: 0.5rem;
+  margin-top: 0;
+}
+
+.wallet-main {
+  max-width: 640px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.wallet-main .welcome-card,
+.wallet-main .checkout-card {
+  margin-bottom: 0;
+}
+
+.wallet-topup-card .section-label,
+.wallet-history .section-label {
+  margin-bottom: 0.25rem;
 }
 
 .wallet-summary-header {
@@ -682,13 +699,37 @@ body {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.75rem;
-  margin: 1rem 0;
+  margin: 1rem 0 1.25rem;
+}
+
+.wallet-preset-btn {
+  width: 100%;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.95rem 0.75rem;
+  min-height: 4.5rem;
+}
+
+.wallet-preset-amount {
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.wallet-preset-unit {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-muted);
 }
 
 .wallet-custom-topup {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  padding: 1.1rem 1.25rem;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: rgba(6, 11, 24, 0.45);
 }
 
 .wallet-custom-topup label {
@@ -696,36 +737,79 @@ body {
   font-size: 0.9rem;
 }
 
+.wallet-amount-input {
+  font-size: 1rem;
+  text-align: right;
+}
+
+.wallet-topup-submit {
+  margin-top: 0.25rem;
+}
+
+.wallet-empty-state {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-top: 1rem;
+  text-align: center;
+  padding: 1.5rem 0;
+}
+
 .wallet-transactions {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.65rem;
   margin-top: 1rem;
 }
 
 .wallet-transaction-item {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
-  justify-content: space-between;
   gap: 1rem;
-  padding: 0.85rem 0;
-  border-bottom: 1px solid var(--border);
+  padding: 0.95rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: rgba(6, 11, 24, 0.35);
 }
 
-.wallet-transaction-item:last-child {
-  border-bottom: none;
+.wallet-transaction-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
 }
 
-.wallet-transaction-item small {
-  display: block;
+.wallet-transaction-title {
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.4;
+}
+
+.wallet-transaction-type {
+  font-size: 0.82rem;
   color: var(--text-muted);
-  margin-top: 0.2rem;
 }
 
 .wallet-transaction-amount {
-  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.15rem;
+  white-space: nowrap;
+}
+
+.wallet-transaction-amount .wallet-credit,
+.wallet-transaction-amount .wallet-debit {
+  font-size: 1rem;
+  font-weight: 700;
   direction: ltr;
+  unicode-bidi: isolate;
+}
+
+.wallet-transaction-unit {
+  font-size: 0.78rem;
+  color: var(--text-muted);
 }
 
 .wallet-credit {
@@ -736,18 +820,30 @@ body {
   color: #f3a6a6;
 }
 
+.wallet-footer {
+  display: flex;
+  justify-content: center;
+  padding-top: 0.25rem;
+}
+
+.wallet-preset-btn {
+  width: 100%;
+}
+
 .btn-secondary {
   background: rgba(201, 168, 76, 0.12);
   color: var(--gold-light);
   border: 1px solid var(--border);
 }
 
-.btn-secondary:hover {
+.btn-secondary:hover:not(:disabled) {
   background: rgba(201, 168, 76, 0.2);
+  border-color: rgba(201, 168, 76, 0.35);
 }
 
-.wallet-preset-btn {
-  width: 100%;
+.btn-secondary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .modal-overlay {
@@ -799,6 +895,25 @@ body {
   color: var(--gold-light);
 }
 
+[data-sonner-toaster] {
+  font-family: "Vazirmatn", sans-serif;
+  direction: rtl;
+}
+
+[data-sonner-toast],
+.app-toast {
+  font-family: "Vazirmatn", sans-serif;
+  direction: rtl;
+  text-align: right;
+}
+
+[data-sonner-toast] [data-title],
+[data-sonner-toast] [data-description] {
+  font-family: inherit;
+  direction: rtl;
+  text-align: right;
+}
+
 @media (max-width: 720px) {
   .pricing-grid {
     grid-template-columns: 1fr;
@@ -813,5 +928,9 @@ body {
   .checkout-price {
     text-align: right;
     direction: rtl;
+  }
+
+  .wallet-presets {
+    grid-template-columns: 1fr;
   }
 }

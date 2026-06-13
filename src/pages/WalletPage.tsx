@@ -80,7 +80,7 @@ export function WalletPage() {
           </p>
         </section>
 
-        <section className="checkout-card">
+        <section className="checkout-card wallet-topup-card">
           <div className="section-label">شارژ کیف پول</div>
           <div className="wallet-presets">
             {TOPUP_PRESETS.map((amount) => (
@@ -89,9 +89,12 @@ export function WalletPage() {
                 type="button"
                 className="btn btn-secondary wallet-preset-btn"
                 disabled={isSubmitting}
-                onClick={() => void handleTopup(amount)}
+                onClick={() => handleTopup(amount)}
               >
-                {formatToman(amount)} تومان
+                <span className="wallet-preset-amount">
+                  {formatToman(amount)}
+                </span>
+                <span className="wallet-preset-unit">تومان</span>
               </button>
             ))}
           </div>
@@ -102,14 +105,14 @@ export function WalletPage() {
               id="topup-amount"
               type="text"
               inputMode="numeric"
-              className="input"
+              className="auth-input-field profile-input wallet-amount-input"
               placeholder="مثلاً ۳۰۰,۰۰۰"
               value={amountInput}
               onChange={(event) => setAmountInput(event.target.value)}
             />
             <button
               type="button"
-              className="btn btn-primary"
+              className="btn btn-primary wallet-topup-submit"
               disabled={isSubmitting}
               onClick={() => void handleCustomTopup()}
             >
@@ -121,16 +124,20 @@ export function WalletPage() {
         <section className="checkout-card wallet-history">
           <div className="section-label">تراکنش‌های اخیر</div>
           {transactions === undefined ? (
-            <p className="checkout-subtitle">در حال بارگذاری...</p>
+            <p className="wallet-empty-state">در حال بارگذاری...</p>
           ) : transactions.length === 0 ? (
-            <p className="checkout-subtitle">هنوز تراکنشی ثبت نشده است.</p>
+            <p className="wallet-empty-state">هنوز تراکنشی ثبت نشده است.</p>
           ) : (
             <ul className="wallet-transactions">
               {transactions.map((transaction) => (
                 <li key={transaction._id} className="wallet-transaction-item">
-                  <div>
-                    <strong>{transaction.description}</strong>
-                    <small>{formatTransactionType(transaction.type)}</small>
+                  <div className="wallet-transaction-details">
+                    <span className="wallet-transaction-title">
+                      {transaction.description}
+                    </span>
+                    <span className="wallet-transaction-type">
+                      {formatTransactionType(transaction.type)}
+                    </span>
                   </div>
                   <div className="wallet-transaction-amount">
                     <span
@@ -141,9 +148,9 @@ export function WalletPage() {
                       }
                     >
                       {transaction.amountToman >= 0 ? "+" : ""}
-                      {formatToman(transaction.amountToman)}
+                      {formatToman(Math.abs(transaction.amountToman))}
                     </span>
-                    <small>تومان</small>
+                    <span className="wallet-transaction-unit">تومان</span>
                   </div>
                 </li>
               ))}
@@ -151,9 +158,11 @@ export function WalletPage() {
           )}
         </section>
 
-        <Link to="/home" className="header-link checkout-cancel">
-          بازگشت به خانه
-        </Link>
+        <div className="wallet-footer">
+          <Link to="/home" className="header-link">
+            بازگشت به خانه
+          </Link>
+        </div>
       </main>
       {modal}
     </div>

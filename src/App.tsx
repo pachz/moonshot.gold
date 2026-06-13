@@ -42,7 +42,11 @@ export default function App() {
         />
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
-      <Toaster richColors position="top-center" />
+      <Toaster
+        richColors
+        position="top-center"
+        toastOptions={{ className: "app-toast" }}
+      />
     </BrowserRouter>
   );
 }
