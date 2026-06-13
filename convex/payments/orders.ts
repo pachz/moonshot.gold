@@ -384,12 +384,31 @@ export const getOrderByTrackId = internalQuery({
     v.null(),
   ),
   handler: async (ctx, args) => {
-    return await ctx.db
+    const order = await ctx.db
       .query("orders")
       .withIndex("by_zibalTrackId", (q) =>
         q.eq("zibalTrackId", args.zibalTrackId),
       )
       .unique();
+
+    if (!order) {
+      return null;
+    }
+
+    return {
+      _id: order._id,
+      userId: order.userId,
+      kind: order.kind,
+      planId: order.planId,
+      amountToman: order.amountToman,
+      walletAmountToman: order.walletAmountToman,
+      gatewayAmountToman: order.gatewayAmountToman,
+      status: order.status,
+      zibalTrackId: order.zibalTrackId,
+      zibalRefNumber: order.zibalRefNumber,
+      createdAt: order.createdAt,
+      paidAt: order.paidAt,
+    };
   },
 });
 

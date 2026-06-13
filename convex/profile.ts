@@ -58,7 +58,11 @@ export const loggedInUser = query({
       return null;
     }
 
-    const { nationalCode: _nationalCode, ...publicUser } = user;
+    const {
+      nationalCode: _nationalCode,
+      walletBalanceToman: _walletBalanceToman,
+      ...publicUser
+    } = user;
     return publicUser;
   },
 });
