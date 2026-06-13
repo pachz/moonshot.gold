@@ -2,7 +2,13 @@ import { defineConfig, type Plugin } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
 
-const appRoutes = ["/login", "/home"];
+const appRoutePrefixes = ["/login", "/home"];
+
+function isAppRoute(url: string): boolean {
+  return appRoutePrefixes.some(
+    (prefix) => url === prefix || url.startsWith(`${prefix}/`),
+  );
+}
 
 function appRouteFallback(): Plugin {
   return {
@@ -10,7 +16,7 @@ function appRouteFallback(): Plugin {
     configureServer(server) {
       server.middlewares.use((req, _res, next) => {
         const url = req.url?.split("?")[0] ?? "";
-        if (appRoutes.includes(url)) {
+        if (isAppRoute(url)) {
           req.url = "/app.html";
         }
         next();
@@ -19,7 +25,7 @@ function appRouteFallback(): Plugin {
     configurePreviewServer(server) {
       server.middlewares.use((req, _res, next) => {
         const url = req.url?.split("?")[0] ?? "";
-        if (appRoutes.includes(url)) {
+        if (isAppRoute(url)) {
           req.url = "/app.html";
         }
         next();

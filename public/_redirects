@@ -1,2 +1,3 @@
-/login  /app.html  200
-/home   /app.html  200
+/login       /app.html  200
+/home        /app.html  200
+/home/*      /app.html  200
