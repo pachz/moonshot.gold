@@ -12,6 +12,14 @@ export function formatRateLimitMessage(
     return "تعداد درخواست‌های پرداخت زیاد است. لطفاً یک دقیقه صبر کنید.";
   }
 
+  if (limitName === "requestManualVerification") {
+    return "لطفاً یک دقیقه صبر کنید و دوباره درخواست تأیید دهید.";
+  }
+
+  if (limitName === "requestManualVerificationDaily") {
+    return "امروز ۳ بار درخواست تأیید داده‌اید. فردا می‌توانید دوباره تلاش کنید.";
+  }
+
   if (retryAfter !== undefined) {
     const seconds = Math.max(1, Math.ceil(retryAfter / 1000));
     if (seconds < 60) {

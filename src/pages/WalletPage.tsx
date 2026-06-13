@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { api } from "../../convex/_generated/api";
 import { AppHeader } from "@/components/layout/AppHeader";
 import { formatToman, parseTomanInput } from "@/lib/currency";
+import { useManualVerificationGate } from "@/hooks/useManualVerificationGate";
 
 const TOPUP_PRESETS = [100_000, 250_000, 500_000, 1_000_000];
 
@@ -25,10 +26,17 @@ export function WalletPage() {
   const wallet = useQuery(api.payments.wallet.balance);
   const transactions = useQuery(api.payments.wallet.recentTransactions);
   const initiateTopup = useAction(api.payments.initiate.initiateWalletTopup);
+  const { runWithVerification, modal } = useManualVerificationGate();
   const [amountInput, setAmountInput] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleTopup = async (amountToman: number) => {
+  const handleTopup = (amountToman: number) => {
+    runWithVerification(() => {
+      void executeTopup(amountToman);
+    });
+  };
+
+  const executeTopup = async (amountToman: number) => {
     setIsSubmitting(true);
     try {
       const result = await initiateTopup({ amountToman });
@@ -147,6 +155,7 @@ export function WalletPage() {
           بازگشت به خانه
         </Link>
       </main>
+      {modal}
     </div>
   );
 }

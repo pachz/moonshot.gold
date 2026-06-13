@@ -111,6 +111,16 @@ async function assertProfileValidatedUser(ctx: QueryCtx | MutationCtx) {
   return { userId, user };
 }
 
+async function assertCanPay(ctx: QueryCtx | MutationCtx) {
+  const { userId, user } = await assertProfileValidatedUser(ctx);
+
+  if (user.manualVerified !== true) {
+    throwUserFacingError("برای پرداخت ابتدا باید تأیید دستی انجام شود");
+  }
+
+  return { userId, user };
+}
+
 async function enforcePaymentRateLimit(
   ctx: MutationCtx,
   phone: string | undefined,
@@ -165,7 +175,7 @@ export const getPaymentPreview = query({
   },
   returns: paymentSplitValidator,
   handler: async (ctx, args) => {
-    const { user } = await assertProfileValidatedUser(ctx);
+    const { user } = await assertCanPay(ctx);
     const totalToman = getPlanAmountToman(args.planId);
     const walletBalanceToman = getWalletBalanceToman(user.walletBalanceToman);
 
@@ -225,6 +235,10 @@ export const prepareSubscriptionPayment = internalMutation({
 
     if (user.profileValidated !== true) {
       throwUserFacingError("ابتدا پروفایل خود را تکمیل کنید");
+    }
+
+    if (user.manualVerified !== true) {
+      throwUserFacingError("برای پرداخت ابتدا باید تأیید دستی انجام شود");
     }
 
     await assertNoActiveSubscription(ctx, userId);
@@ -301,6 +315,10 @@ export const prepareWalletTopup = internalMutation({
 
     if (user.profileValidated !== true) {
       throwUserFacingError("ابتدا پروفایل خود را تکمیل کنید");
+    }
+
+    if (user.manualVerified !== true) {
+      throwUserFacingError("برای پرداخت ابتدا باید تأیید دستی انجام شود");
     }
 
     if (

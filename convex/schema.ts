@@ -38,6 +38,7 @@ export default defineSchema({
     isAnonymous: v.optional(v.boolean()),
     nationalCode: v.optional(v.string()),
     profileValidated: v.optional(v.boolean()),
+    manualVerified: v.optional(v.boolean()),
     walletBalanceToman: v.optional(v.number()),
   })
     .index("email", ["email"])
@@ -80,4 +81,19 @@ export default defineSchema({
     description: v.string(),
     createdAt: v.number(),
   }).index("by_user", ["userId"]),
+
+  manualVerificationRequests: defineTable({
+    userId: v.id("users"),
+    status: v.union(
+      v.literal("pending"),
+      v.literal("approved"),
+      v.literal("rejected"),
+    ),
+    telegramChatId: v.optional(v.string()),
+    telegramMessageId: v.optional(v.number()),
+    createdAt: v.number(),
+    resolvedAt: v.optional(v.number()),
+  })
+    .index("by_user", ["userId"])
+    .index("by_user_and_status", ["userId", "status"]),
 });

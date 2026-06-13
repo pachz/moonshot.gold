@@ -61,6 +61,7 @@ export const loggedInUser = query({
     const {
       nationalCode: _nationalCode,
       walletBalanceToman: _walletBalanceToman,
+      manualVerified: _manualVerified,
       ...publicUser
     } = user;
     return publicUser;

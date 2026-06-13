@@ -6,6 +6,7 @@ import { api } from "../../convex/_generated/api";
 import { AppHeader } from "@/components/layout/AppHeader";
 import { formatToman } from "@/lib/currency";
 import { getPackageById } from "@/lib/packages";
+import { useManualVerificationGate } from "@/hooks/useManualVerificationGate";
 
 type PaymentMethod = "gateway" | "wallet" | "combined";
 
@@ -38,6 +39,7 @@ export function CheckoutPage() {
   const initiatePayment = useAction(
     api.payments.initiate.initiateSubscriptionPayment,
   );
+  const { runWithVerification, modal } = useManualVerificationGate();
   const plan = getPackageById(searchParams.get("plan"));
   const preview = useQuery(
     api.payments.orders.getPaymentPreview,
@@ -48,7 +50,13 @@ export function CheckoutPage() {
     return <Navigate to="/home" replace />;
   }
 
-  const handlePay = async () => {
+  const handlePay = () => {
+    runWithVerification(() => {
+      void executePay();
+    });
+  };
+
+  const executePay = async () => {
     setIsPaying(true);
     try {
       const result = await initiatePayment({
@@ -172,7 +180,7 @@ export function CheckoutPage() {
             <button
               type="button"
               className="btn btn-primary checkout-pay-btn"
-              onClick={() => void handlePay()}
+              onClick={handlePay}
               disabled={
                 isPaying || preview === undefined || preview.canPay === false
               }
@@ -192,6 +200,7 @@ export function CheckoutPage() {
           </div>
         </section>
       </main>
+      {modal}
     </div>
   );
 }

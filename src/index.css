@@ -785,6 +785,20 @@ body {
   line-height: 1.8;
 }
 
+.manual-verify-modal {
+  text-align: center;
+}
+
+.manual-verify-modal .header-link {
+  display: inline-block;
+  margin-top: 0.75rem;
+}
+
+.manual-verify-hint {
+  font-size: 0.9rem;
+  color: var(--gold-light);
+}
+
 @media (max-width: 720px) {
   .pricing-grid {
     grid-template-columns: 1fr;
