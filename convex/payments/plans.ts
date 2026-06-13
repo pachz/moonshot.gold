@@ -20,6 +20,9 @@ export const SUBSCRIPTION_DURATION_MS = 30 * 24 * 60 * 60 * 1000;
 
 export const MIN_WALLET_TOPUP_TOMAN = 50_000;
 export const MAX_WALLET_TOPUP_TOMAN = 50_000_000;
+export const DAILY_PAYMENT_LIMIT_TOMAN = 1_000_000;
+
+export const DAILY_PAYMENT_WINDOW_MS = 24 * 60 * 60 * 1000;
 
 export function getPlanAmountToman(planId: PlanId): number {
   return PLAN_PRICES_TOMAN[planId];

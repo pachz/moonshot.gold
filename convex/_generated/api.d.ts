@@ -19,6 +19,7 @@ import type * as otp_CustomOTP from "../otp/CustomOTP.js";
 import type * as payments_confirm from "../payments/confirm.js";
 import type * as payments_currency from "../payments/currency.js";
 import type * as payments_initiate from "../payments/initiate.js";
+import type * as payments_limits from "../payments/limits.js";
 import type * as payments_orders from "../payments/orders.js";
 import type * as payments_plans from "../payments/plans.js";
 import type * as payments_wallet from "../payments/wallet.js";
@@ -45,6 +46,7 @@ declare const fullApi: ApiFromModules<{
   "payments/confirm": typeof payments_confirm;
   "payments/currency": typeof payments_currency;
   "payments/initiate": typeof payments_initiate;
+  "payments/limits": typeof payments_limits;
   "payments/orders": typeof payments_orders;
   "payments/plans": typeof payments_plans;
   "payments/wallet": typeof payments_wallet;

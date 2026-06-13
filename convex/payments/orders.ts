@@ -22,6 +22,7 @@ import {
   type PaymentMethod,
   type PlanId,
 } from "./plans";
+import { assertWithinDailyPaymentLimit } from "./limits";
 
 const activeSubscriptionValidator = v.union(
   v.object({
@@ -230,6 +231,8 @@ export const prepareSubscriptionPayment = internalMutation({
     await enforcePaymentRateLimit(ctx, user.phone);
 
     const amountToman = getPlanAmountToman(args.planId);
+    await assertWithinDailyPaymentLimit(ctx, userId, amountToman);
+
     const walletBalanceToman = getWalletBalanceToman(user.walletBalanceToman);
     const split = calculatePaymentSplit(
       amountToman,
@@ -310,6 +313,7 @@ export const prepareWalletTopup = internalMutation({
     }
 
     await enforcePaymentRateLimit(ctx, user.phone);
+    await assertWithinDailyPaymentLimit(ctx, userId, args.amountToman);
 
     const now = Date.now();
     const orderId = await ctx.db.insert("orders", {
