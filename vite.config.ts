@@ -1,14 +1,7 @@
 import { defineConfig, type Plugin } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
-
-const appRoutePrefixes = ["/login", "/home"];
-
-function isAppRoute(url: string): boolean {
-  return appRoutePrefixes.some(
-    (prefix) => url === prefix || url.startsWith(`${prefix}/`),
-  );
-}
+import { isSpaRoute } from "./spa-routes.config";
 
 function appRouteFallback(): Plugin {
   return {
@@ -16,7 +9,7 @@ function appRouteFallback(): Plugin {
     configureServer(server) {
       server.middlewares.use((req, _res, next) => {
         const url = req.url?.split("?")[0] ?? "";
-        if (isAppRoute(url)) {
+        if (isSpaRoute(url)) {
           req.url = "/app.html";
         }
         next();
@@ -25,7 +18,7 @@ function appRouteFallback(): Plugin {
     configurePreviewServer(server) {
       server.middlewares.use((req, _res, next) => {
         const url = req.url?.split("?")[0] ?? "";
-        if (isAppRoute(url)) {
+        if (isSpaRoute(url)) {
           req.url = "/app.html";
         }
         next();
