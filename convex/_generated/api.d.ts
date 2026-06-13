@@ -11,7 +11,10 @@
 import type * as auth from "../auth.js";
 import type * as auth_phone from "../auth/phone.js";
 import type * as http from "../http.js";
+import type * as identity_shahkar from "../identity/shahkar.js";
+import type * as lib_outboundProxy from "../lib/outboundProxy.js";
 import type * as otp_CustomOTP from "../otp/CustomOTP.js";
+import type * as profile from "../profile.js";
 import type * as ratelimiter from "../ratelimiter.js";
 
 import type {
@@ -24,7 +27,10 @@ declare const fullApi: ApiFromModules<{
   auth: typeof auth;
   "auth/phone": typeof auth_phone;
   http: typeof http;
+  "identity/shahkar": typeof identity_shahkar;
+  "lib/outboundProxy": typeof lib_outboundProxy;
   "otp/CustomOTP": typeof otp_CustomOTP;
+  profile: typeof profile;
   ratelimiter: typeof ratelimiter;
 }>;
 

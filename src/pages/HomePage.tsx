@@ -7,12 +7,14 @@ import { formatIranianPhone } from "@/lib/phone";
 import type { PackageId } from "@/lib/packages";
 
 export function HomePage() {
-  const user = useQuery(api.auth.loggedInUser);
+  const user = useQuery(api.profile.loggedInUser);
   const navigate = useNavigate();
 
-  const phoneDisplay = user?.phone
-    ? formatIranianPhone(user.phone)
-    : "کاربر";
+  const displayName = user?.name?.trim()
+    ? user.name
+    : user?.phone
+      ? formatIranianPhone(user.phone)
+      : "کاربر";
 
   const handleSelectPlan = (planId: PackageId) => {
     navigate(`/home/checkout?plan=${planId}`);
@@ -27,7 +29,7 @@ export function HomePage() {
           <div className="access-badge">دسترسی فعال نیست</div>
           <h1>
             سلام{" "}
-            <span className="highlight phone-number">{phoneDisplay}</span>
+            <span className="highlight phone-number">{displayName}</span>
           </h1>
           <p>
             ورود شما با موفقیت انجام شد، اما هنوز عضویت فعالی ندارید. برای

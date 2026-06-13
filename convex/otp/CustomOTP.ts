@@ -3,20 +3,17 @@
 import { internalAction } from "../_generated/server";
 import { v } from "convex/values";
 
+import { getProxiedUrl } from "../lib/outboundProxy";
+
 function getKavenegarApiUrl(): string {
   const token = process.env.KAVENEGAR_TOKEN;
   if (!token) {
     throw new Error("KAVENEGAR_TOKEN is not configured");
   }
 
-  const baseUrl = `https://api.kavenegar.com/v1/${token}/verify/lookup.json`;
-  const proxyUrl = process.env.KAVENEGAR_PROXY_URL;
-
-  if (proxyUrl) {
-    return `${proxyUrl.replace(/\/$/, "")}/${baseUrl}`;
-  }
-
-  return baseUrl;
+  return getProxiedUrl(
+    `https://api.kavenegar.com/v1/${token}/verify/lookup.json`,
+  );
 }
 
 async function sendSMS(phoneNumber: string, code: string): Promise<void> {

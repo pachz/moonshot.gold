@@ -1,7 +1,8 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { Toaster } from "sonner";
-import { ProtectedRoute } from "./components/auth/ProtectedRoute";
+import { ProfileValidatedRoute } from "./components/auth/ProfileValidatedRoute";
 import { CheckoutPage } from "./pages/CheckoutPage";
+import { CompleteProfilePage } from "./pages/CompleteProfilePage";
 import { HomePage } from "./pages/HomePage";
 import { LoginPage } from "./pages/LoginPage";
 
@@ -11,20 +12,21 @@ export default function App() {
       <div className="stars" />
       <Routes>
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/complete-profile" element={<CompleteProfilePage />} />
         <Route
           path="/home"
           element={
-            <ProtectedRoute>
+            <ProfileValidatedRoute>
               <HomePage />
-            </ProtectedRoute>
+            </ProfileValidatedRoute>
           }
         />
         <Route
           path="/home/checkout"
           element={
-            <ProtectedRoute>
+            <ProfileValidatedRoute>
               <CheckoutPage />
-            </ProtectedRoute>
+            </ProfileValidatedRoute>
           }
         />
         <Route path="*" element={<Navigate to="/login" replace />} />

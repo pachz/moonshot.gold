@@ -1,24 +1,31 @@
-import { useConvexAuth } from "convex/react";
+import { useConvexAuth, useQuery } from "convex/react";
 import { Navigate, useLocation } from "react-router-dom";
+import { api } from "../../convex/_generated/api";
 import { SignInFormPhone } from "@/components/auth/SignInFormPhone";
 
 export function LoginPage() {
-  const { isAuthenticated, isLoading } = useConvexAuth();
+  const { isAuthenticated, isLoading: authLoading } = useConvexAuth();
+  const user = useQuery(api.profile.loggedInUser);
   const location = useLocation();
 
-  if (isAuthenticated) {
-    const from =
-      (location.state as { from?: { pathname?: string } } | null)?.from
-        ?.pathname ?? "/home";
-    return <Navigate to={from} replace />;
-  }
-
-  if (isLoading) {
+  if (authLoading || (isAuthenticated && user === undefined)) {
     return (
       <div className="loading-center page">
         <div className="spinner" />
       </div>
     );
+  }
+
+  if (isAuthenticated) {
+    const from =
+      (location.state as { from?: { pathname?: string } } | null)?.from
+        ?.pathname ?? "/home";
+
+    if (user?.profileValidated === true) {
+      return <Navigate to={from} replace />;
+    }
+
+    return <Navigate to="/complete-profile" replace />;
   }
 
   return (

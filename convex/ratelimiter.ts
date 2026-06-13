@@ -1,6 +1,10 @@
-import { RateLimiter, MINUTE } from "@convex-dev/rate-limiter";
+import { RateLimiter, MINUTE, HOUR } from "@convex-dev/rate-limiter";
 import { components } from "./_generated/api";
+
+const DAY = 24 * HOUR;
 
 export const rateLimiter = new RateLimiter(components.rateLimiter, {
   sendOTP: { kind: "fixed window", rate: 1, period: MINUTE },
+  validateProfile: { kind: "fixed window", rate: 1, period: MINUTE },
+  validateProfileDaily: { kind: "fixed window", rate: 5, period: DAY },
 });

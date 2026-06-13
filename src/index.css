@@ -184,6 +184,27 @@ body {
   text-decoration: underline;
 }
 
+.profile-input {
+  text-align: right;
+  letter-spacing: 0;
+  direction: rtl;
+}
+
+.profile-phone-note {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.profile-hint {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  line-height: 1.6;
+  margin: -0.25rem 0 0;
+}
+
 .loading-center {
   min-height: 100vh;
   display: flex;
