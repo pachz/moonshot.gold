@@ -21,9 +21,11 @@ export function HomePage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const user = useQuery(api.profile.loggedInUser);
   const wallet = useQuery(api.payments.wallet.balance);
-  const subscription = useQuery(api.payments.orders.activeSubscription, {
-    now: Date.now(),
-  });
+  const subscription = useQuery(api.payments.orders.activeSubscription);
+  const hasActiveSubscription =
+    subscription !== undefined &&
+    subscription !== null &&
+    subscription.expiresAt > Date.now();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -57,7 +59,7 @@ export function HomePage() {
       : "کاربر";
 
   const handleSelectPlan = (planId: PackageId) => {
-    if (subscription) {
+    if (hasActiveSubscription) {
       toast.message("شما در حال حاضر عضویت فعال دارید.");
       return;
     }
@@ -65,9 +67,10 @@ export function HomePage() {
     navigate(`/home/checkout?plan=${planId}`);
   };
 
-  const activePlan = subscription
-    ? getPackageById(subscription.planId)
-    : undefined;
+  const activePlan =
+    hasActiveSubscription && subscription
+      ? getPackageById(subscription.planId)
+      : undefined;
 
   return (
     <div className="page">
@@ -76,15 +79,15 @@ export function HomePage() {
       <main className="home-main">
         <section className="welcome-card access-card">
           <div
-            className={`access-badge${subscription ? " access-badge-active" : ""}`}
+            className={`access-badge${hasActiveSubscription ? " access-badge-active" : ""}`}
           >
-            {subscription ? "دسترسی فعال" : "دسترسی فعال نیست"}
+            {hasActiveSubscription ? "دسترسی فعال" : "دسترسی فعال نیست"}
           </div>
           <h1>
             سلام{" "}
             <span className="highlight phone-number">{displayName}</span>
           </h1>
-          {subscription && activePlan ? (
+          {hasActiveSubscription && subscription && activePlan ? (
             <p>
               عضویت {activePlan.name} شما فعال است و تا{" "}
               <strong>{formatExpiryDate(subscription.expiresAt)}</strong> معتبر
@@ -118,7 +121,7 @@ export function HomePage() {
           </p>
         </section>
 
-        {!subscription && (
+        {!hasActiveSubscription && (
           <section className="pricing-section">
             <div className="section-label">عضویت</div>
             <h2 className="section-title">پلن‌های یک‌ماهه</h2>

@@ -141,9 +141,9 @@ async function enforcePaymentRateLimit(
 }
 
 export const activeSubscription = query({
-  args: { now: v.number() },
+  args: {},
   returns: activeSubscriptionValidator,
-  handler: async (ctx, args) => {
+  handler: async (ctx) => {
     const userId = await getAuthUserId(ctx);
     if (!userId) {
       return null;
@@ -156,7 +156,7 @@ export const activeSubscription = query({
       )
       .first();
 
-    if (!subscription || subscription.expiresAt <= args.now) {
+    if (!subscription) {
       return null;
     }
 
