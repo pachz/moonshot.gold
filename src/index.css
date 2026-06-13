@@ -350,6 +350,12 @@ body {
   margin-bottom: 1rem;
 }
 
+.access-badge-active {
+  background: rgba(76, 201, 120, 0.12);
+  border-color: rgba(76, 201, 120, 0.35);
+  color: #8fd9a8;
+}
+
 .access-card p {
   margin-top: 0.5rem;
 }
@@ -589,6 +595,159 @@ body {
 
 .checkout-cancel {
   font-size: 0.9rem;
+}
+
+.payment-methods {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.payment-method-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  cursor: pointer;
+  background: rgba(6, 11, 24, 0.35);
+}
+
+.payment-method-option:has(input:checked) {
+  border-color: rgba(201, 168, 76, 0.45);
+  background: rgba(201, 168, 76, 0.08);
+}
+
+.payment-method-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.payment-method-copy strong {
+  color: var(--gold-light);
+}
+
+.payment-method-copy small {
+  color: var(--text-muted);
+}
+
+.checkout-summary-total {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border);
+}
+
+.payment-preview-error {
+  margin-top: 0.75rem;
+  color: #f3a6a6;
+  font-size: 0.9rem;
+}
+
+.wallet-summary-card,
+.wallet-card {
+  margin-top: 0.5rem;
+}
+
+.wallet-summary-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.wallet-balance {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--gold-light);
+  margin: 0.5rem 0 1rem;
+}
+
+.wallet-balance span,
+.wallet-balance-compact span {
+  font-size: 1rem;
+  color: var(--text-muted);
+  margin-right: 0.35rem;
+}
+
+.wallet-balance-compact {
+  font-size: 1.35rem;
+  margin: 0.25rem 0 0;
+}
+
+.wallet-presets {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 1rem 0;
+}
+
+.wallet-custom-topup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.wallet-custom-topup label {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.wallet-transactions {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.wallet-transaction-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.wallet-transaction-item:last-child {
+  border-bottom: none;
+}
+
+.wallet-transaction-item small {
+  display: block;
+  color: var(--text-muted);
+  margin-top: 0.2rem;
+}
+
+.wallet-transaction-amount {
+  text-align: left;
+  direction: ltr;
+}
+
+.wallet-credit {
+  color: #8fd9a8;
+}
+
+.wallet-debit {
+  color: #f3a6a6;
+}
+
+.btn-secondary {
+  background: rgba(201, 168, 76, 0.12);
+  color: var(--gold-light);
+  border: 1px solid var(--border);
+}
+
+.btn-secondary:hover {
+  background: rgba(201, 168, 76, 0.2);
+}
+
+.wallet-preset-btn {
+  width: 100%;
 }
 
 .modal-overlay {

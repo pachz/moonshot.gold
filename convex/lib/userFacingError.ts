@@ -8,6 +8,10 @@ export function formatRateLimitMessage(
     return "امروز ۵ بار درخواست تأیید داده‌اید. فردا می‌توانید دوباره تلاش کنید.";
   }
 
+  if (limitName === "initiatePayment") {
+    return "تعداد درخواست‌های پرداخت زیاد است. لطفاً یک دقیقه صبر کنید.";
+  }
+
   if (retryAfter !== undefined) {
     const seconds = Math.max(1, Math.ceil(retryAfter / 1000));
     if (seconds < 60) {

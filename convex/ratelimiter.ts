@@ -7,4 +7,5 @@ export const rateLimiter = new RateLimiter(components.rateLimiter, {
   sendOTP: { kind: "fixed window", rate: 1, period: MINUTE },
   validateProfile: { kind: "fixed window", rate: 1, period: MINUTE },
   validateProfileDaily: { kind: "fixed window", rate: 5, period: DAY },
+  initiatePayment: { kind: "fixed window", rate: 3, period: MINUTE },
 });

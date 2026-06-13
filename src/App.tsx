@@ -5,6 +5,7 @@ import { CheckoutPage } from "./pages/CheckoutPage";
 import { CompleteProfilePage } from "./pages/CompleteProfilePage";
 import { HomePage } from "./pages/HomePage";
 import { LoginPage } from "./pages/LoginPage";
+import { WalletPage } from "./pages/WalletPage";
 
 export default function App() {
   return (
@@ -26,6 +27,14 @@ export default function App() {
           element={
             <ProfileValidatedRoute>
               <CheckoutPage />
+            </ProfileValidatedRoute>
+          }
+        />
+        <Route
+          path="/home/wallet"
+          element={
+            <ProfileValidatedRoute>
+              <WalletPage />
             </ProfileValidatedRoute>
           }
         />
