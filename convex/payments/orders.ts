@@ -566,6 +566,14 @@ export const completeWalletTopup = internalMutation({
       description: "شارژ کیف پول",
     });
 
+    const user = await ctx.db.get("users", order.userId);
+    if (user?.phone) {
+      await ctx.scheduler.runAfter(0, internal.sms.kavenegar.sendWalletTopupSms, {
+        phoneNumber: user.phone,
+        amountToman: order.amountToman,
+      });
+    }
+
     return { alreadyPaid: false };
   },
 });

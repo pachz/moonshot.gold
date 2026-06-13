@@ -16,7 +16,7 @@ export const KavenegarOTP = Phone({
 
     await rateLimiter.limit(ctx, "sendOTP", { key: phone, throws: true });
 
-    await ctx.runAction(internal.otp.CustomOTP.sendOTP, {
+    await ctx.runAction(internal.sms.kavenegar.sendOTP, {
       phoneNumber: phone,
       code: token,
     });

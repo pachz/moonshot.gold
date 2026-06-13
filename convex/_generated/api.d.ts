@@ -17,7 +17,6 @@ import type * as lib_outboundProxy from "../lib/outboundProxy.js";
 import type * as lib_userFacingError from "../lib/userFacingError.js";
 import type * as manualVerification from "../manualVerification.js";
 import type * as manualVerificationActions from "../manualVerificationActions.js";
-import type * as otp_CustomOTP from "../otp/CustomOTP.js";
 import type * as payments_confirm from "../payments/confirm.js";
 import type * as payments_currency from "../payments/currency.js";
 import type * as payments_initiate from "../payments/initiate.js";
@@ -29,6 +28,7 @@ import type * as payments_zibal from "../payments/zibal.js";
 import type * as profile from "../profile.js";
 import type * as profileActions from "../profileActions.js";
 import type * as ratelimiter from "../ratelimiter.js";
+import type * as sms_kavenegar from "../sms/kavenegar.js";
 import type * as telegram_bot from "../telegram/bot.js";
 import type * as telegram_webhook from "../telegram/webhook.js";
 
@@ -48,7 +48,6 @@ declare const fullApi: ApiFromModules<{
   "lib/userFacingError": typeof lib_userFacingError;
   manualVerification: typeof manualVerification;
   manualVerificationActions: typeof manualVerificationActions;
-  "otp/CustomOTP": typeof otp_CustomOTP;
   "payments/confirm": typeof payments_confirm;
   "payments/currency": typeof payments_currency;
   "payments/initiate": typeof payments_initiate;
@@ -60,6 +59,7 @@ declare const fullApi: ApiFromModules<{
   profile: typeof profile;
   profileActions: typeof profileActions;
   ratelimiter: typeof ratelimiter;
+  "sms/kavenegar": typeof sms_kavenegar;
   "telegram/bot": typeof telegram_bot;
   "telegram/webhook": typeof telegram_webhook;
 }>;
