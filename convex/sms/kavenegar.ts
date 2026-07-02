@@ -3,6 +3,7 @@
 import { internalAction } from "../_generated/server";
 import { v } from "convex/values";
 import { getProxiedUrl } from "../lib/outboundProxy";
+import { outboundFetch } from "../lib/outboundFetch";
 
 function getKavenegarApiUrl(): string {
   const token = process.env.KAVENEGAR_TOKEN;
@@ -20,17 +21,20 @@ async function sendLookupSms(params: {
   template: string;
   token: string;
 }): Promise<void> {
-  const response = await fetch(getKavenegarApiUrl(), {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
+  const response = await outboundFetch({
+    url: getKavenegarApiUrl(),
+    init: {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: new URLSearchParams({
+        receptor: params.phoneNumber,
+        token: params.token,
+        template: params.template,
+        type: "sms",
+      }).toString(),
     },
-    body: new URLSearchParams({
-      receptor: params.phoneNumber,
-      token: params.token,
-      template: params.template,
-      type: "sms",
-    }).toString(),
   });
 
   if (!response.ok) {

@@ -10,9 +10,11 @@
 
 import type * as auth from "../auth.js";
 import type * as auth_phone from "../auth/phone.js";
+import type * as crons from "../crons.js";
 import type * as http from "../http.js";
 import type * as identity_shahkar from "../identity/shahkar.js";
 import type * as identity_shahkarMessages from "../identity/shahkarMessages.js";
+import type * as lib_outboundFetch from "../lib/outboundFetch.js";
 import type * as lib_outboundProxy from "../lib/outboundProxy.js";
 import type * as lib_userFacingError from "../lib/userFacingError.js";
 import type * as manualVerification from "../manualVerification.js";
@@ -29,8 +31,16 @@ import type * as profile from "../profile.js";
 import type * as profileActions from "../profileActions.js";
 import type * as ratelimiter from "../ratelimiter.js";
 import type * as sms_kavenegar from "../sms/kavenegar.js";
+import type * as synapse_accounts from "../synapse/accounts.js";
+import type * as synapse_auth from "../synapse/auth.js";
+import type * as synapse_client from "../synapse/client.js";
+import type * as synapse_session from "../synapse/session.js";
+import type * as synapse_totp from "../synapse/totp.js";
+import type * as synapse_totpLib from "../synapse/totpLib.js";
+import type * as telegram_allowedUsers from "../telegram/allowedUsers.js";
 import type * as telegram_bot from "../telegram/bot.js";
-import type * as telegram_webhook from "../telegram/webhook.js";
+import type * as telegram_client from "../telegram/client.js";
+import type * as telegram_setup from "../telegram/setup.js";
 
 import type {
   ApiFromModules,
@@ -41,9 +51,11 @@ import type {
 declare const fullApi: ApiFromModules<{
   auth: typeof auth;
   "auth/phone": typeof auth_phone;
+  crons: typeof crons;
   http: typeof http;
   "identity/shahkar": typeof identity_shahkar;
   "identity/shahkarMessages": typeof identity_shahkarMessages;
+  "lib/outboundFetch": typeof lib_outboundFetch;
   "lib/outboundProxy": typeof lib_outboundProxy;
   "lib/userFacingError": typeof lib_userFacingError;
   manualVerification: typeof manualVerification;
@@ -60,8 +72,16 @@ declare const fullApi: ApiFromModules<{
   profileActions: typeof profileActions;
   ratelimiter: typeof ratelimiter;
   "sms/kavenegar": typeof sms_kavenegar;
+  "synapse/accounts": typeof synapse_accounts;
+  "synapse/auth": typeof synapse_auth;
+  "synapse/client": typeof synapse_client;
+  "synapse/session": typeof synapse_session;
+  "synapse/totp": typeof synapse_totp;
+  "synapse/totpLib": typeof synapse_totpLib;
+  "telegram/allowedUsers": typeof telegram_allowedUsers;
   "telegram/bot": typeof telegram_bot;
-  "telegram/webhook": typeof telegram_webhook;
+  "telegram/client": typeof telegram_client;
+  "telegram/setup": typeof telegram_setup;
 }>;
 
 /**
@@ -223,6 +243,37 @@ export declare const components: {
     };
     time: {
       getServerTime: FunctionReference<"mutation", "internal", {}, number>;
+    };
+  };
+  telegram: {
+    webhooks: {
+      create: FunctionReference<
+        "mutation",
+        "internal",
+        {
+          botId: number;
+          botUsername: string;
+          secretHash: string;
+          settings: {
+            allowedUpdates: Array<string>;
+            dropPendingUpdates: boolean;
+            webhookUrl: string;
+          };
+        },
+        null
+      >;
+      remove: FunctionReference<
+        "mutation",
+        "internal",
+        { botUsername: string },
+        null
+      >;
+      verifySecretHash: FunctionReference<
+        "query",
+        "internal",
+        { secretHash: string },
+        boolean
+      >;
     };
   };
 };

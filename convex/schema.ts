@@ -82,6 +82,16 @@ export default defineSchema({
     createdAt: v.number(),
   }).index("by_user", ["userId"]),
 
+  synapseSessions: defineTable({
+    sessionKey: v.literal("admin"),
+    accessToken: v.string(),
+    userId: v.number(),
+    username: v.string(),
+    name: v.string(),
+    loggedInAt: v.number(),
+    lastValidatedAt: v.number(),
+  }).index("by_sessionKey", ["sessionKey"]),
+
   manualVerificationRequests: defineTable({
     userId: v.id("users"),
     status: v.union(

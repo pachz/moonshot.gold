@@ -166,6 +166,34 @@ async function callTelegramApi<T extends TelegramApiResponse>(
   return { success: true, data };
 }
 
+export const processWhitelistedMessage = internalAction({
+  args: {
+    chatId: v.number(),
+    text: v.string(),
+  },
+  returns: v.null(),
+  handler: async (ctx, args) => {
+    const result = await ctx.runAction(
+      internal.synapse.accounts.lookupAndInitAccount,
+      { username: args.text.trim() },
+    );
+
+    const sendResult = await callTelegramApi<TelegramApiResponse>("sendMessage", {
+      chat_id: args.chatId,
+      text: result.message,
+    });
+
+    if (!sendResult.success) {
+      console.error("Failed to reply to whitelisted Telegram user", {
+        chatId: args.chatId,
+        message: sendResult.message,
+      });
+    }
+
+    return null;
+  },
+});
+
 export const sendVerificationRequest = internalAction({
   args: {
     requestId: v.id("manualVerificationRequests"),

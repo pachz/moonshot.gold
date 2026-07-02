@@ -4,6 +4,7 @@ import { v } from "convex/values";
 import { internal } from "../_generated/api";
 import { internalAction } from "../_generated/server";
 import { getProxiedUrl } from "../lib/outboundProxy";
+import { outboundFetch } from "../lib/outboundFetch";
 import { tomanToRials } from "./currency";
 
 const ZIBAL_REQUEST_URL =
@@ -65,13 +66,16 @@ async function postToZibal<T>(
   url: string,
   body: Record<string, unknown>,
 ): Promise<T> {
-  const response = await fetch(getProxiedUrl(url), {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
+  const response = await outboundFetch({
+    url: getProxiedUrl(url),
+    init: {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(body),
     },
-    body: JSON.stringify(body),
   });
 
   return (await response.json()) as T;

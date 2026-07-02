@@ -3,6 +3,7 @@
 import { internalAction } from "../_generated/server";
 import { v } from "convex/values";
 import { getProxiedUrl } from "../lib/outboundProxy";
+import { outboundFetch } from "../lib/outboundFetch";
 import { mapShahkarResponse } from "./shahkarMessages";
 
 const SHAHKAR_API_URL =
@@ -40,16 +41,19 @@ export const verify = internalAction({
 
     let response: Response;
     try {
-      response = await fetch(getProxiedUrl(SHAHKAR_API_URL), {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+      response = await outboundFetch({
+        url: getProxiedUrl(SHAHKAR_API_URL),
+        init: {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            mobile: args.mobile,
+            national_code: args.nationalCode,
+          }),
         },
-        body: JSON.stringify({
-          mobile: args.mobile,
-          national_code: args.nationalCode,
-        }),
       });
     } catch {
       return {
